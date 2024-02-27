@@ -12,17 +12,18 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        titillium: ['"Titillium Web"', "sans-serif"],
+        arimo: ["Arimo", "sans-serif"],
+        lato: ["Lato", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        notosanslao: ["notosanslao", "sans-serif"],
+      },
     },
   },
+
   daisyui: {
-    themes: [
-      // "light",
-      {
-        mytheme: {
-          primary: "#023047",
-        },
-      },
-    ],
+    themes: ["light"],
   },
   plugins: [require("daisyui")],
 };
