@@ -7,11 +7,19 @@ const Logo = () => {
         className="h-auto w-[2rem] object-cover sm:w-[3rem]"
         src={cyberpunk}
         alt=""
+        width={0}
+        height={0}
+        priority={true}
+        sizes="100vw"
       />
       <Image
         className="h-auto w-[6rem] sm:w-[7rem]"
         src={cyberpunktext}
         alt=""
+        width={0}
+        height={0}
+        priority={true}
+        sizes="100vw"
       />
     </div>
   );
