@@ -13,9 +13,9 @@ import "./styles.css";
 const Hero = () => {
   return (
     <motion.div
-      variants={fadeFromTopAnimate}
-      initial={"offscreen"}
-      animate={"onscreen"}
+      // variants={fadeFromTopAnimate}
+      // initial={"offscreen"}
+      // animate={"onscreen"}
       className="w-full"
     >
       <Swiper

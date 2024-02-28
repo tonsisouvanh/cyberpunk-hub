@@ -1,4 +1,5 @@
 "use client";
+import { noimage } from "@/assets/images";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Spinner from "@/components/Spinner";
 import { fetchProduct } from "@/utils/request";
@@ -27,10 +28,6 @@ const ProductDetailPage = () => {
       fetchProductData();
     }
   }, [id, product]);
-
-  const logData = (image) => {
-    console.log(image);
-  };
 
   if (loading) {
     return <Spinner loading={loading} />;
@@ -145,7 +142,7 @@ const ProductDetailPage = () => {
                 <div className="max-w-xl overflow-hidden rounded-lg">
                   <Image
                     className="h-full w-full max-w-full object-cover"
-                    src={product.images[0]}
+                    src={product?.images[0] || noimage}
                     alt=""
                     width={500}
                     height={500}
@@ -155,7 +152,7 @@ const ProductDetailPage = () => {
               </div>
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
                 <div className="flex flex-row items-start lg:flex-col">
-                  {product.images.length > 0 &&
+                  {product && product?.images?.length > 0 &&
                     product?.images?.map((image, index) => (
                       <button
                         key={index}

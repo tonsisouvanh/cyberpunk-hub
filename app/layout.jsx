@@ -17,7 +17,7 @@ const MainLayout = ({ children }) => {
     // <AuthProvider>
     <html lang="en">
       <body
-        className={`${notoSansLao.className} relative bg-gradient-to-br from-slate-50 to-slate-100`}
+        className={`${notoSansLao.className} relative bg-gradient-to-r from-slate-50 to-gray-100`}
       >
         <Navbar />
         <main>{children}</main>

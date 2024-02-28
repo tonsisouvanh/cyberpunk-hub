@@ -1,3 +1,4 @@
+import { noimage } from "@/assets/images";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -9,7 +10,7 @@ const ProductCard = ({ product }) => {
         href={`/products/${product._id}`}
       >
         <Image
-          src={product?.images[0]}
+          src={product?.images[0] || noimage}
           alt="Shoes"
           width={500}
           height={500}

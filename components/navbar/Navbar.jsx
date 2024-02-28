@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { AiTwotoneShopping } from "react-icons/ai";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 import Logo from "../Logo";
 import BurgerMenuIcon from "../BurgerMenuIcon";
 import { usePathname } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
+import { BiCartAlt } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
 
 const menuItems = [
   { text: "ໜ້າຫຼັກ", toPath: "/" },
@@ -18,10 +19,12 @@ const menuItems = [
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log("🚀 ~ Navbar ~ pathname:", pathname);
   const [isOpen, setIsOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleNavbarClose = () => {
     setIsOpen(false);
   };
@@ -57,6 +60,31 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
+            {isLoggedIn ? (
+              <div className="flex items-center justify-center gap-2">
+                <button className="btn btn-circle btn-ghost">
+                  <CgProfile className="text-neutral" size={30} />
+                </button>
+                <Link
+                  href={`/cart/${1}`}
+                  className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
+                >
+                  <BiCartAlt className="text-neutral" size={30} />
+
+                  <span className="absolute top-2 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
+                </Link>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsLoggedIn(true)}
+                href="/login"
+                className="btn text-white hover:bg-blue-700 bg-blue-500"
+              >
+                <FaGoogle />
+                Sign in
+              </button>
+            )}
             {/* User profile here */}
           </div>
         </div>
@@ -65,27 +93,17 @@ const Navbar = () => {
       <nav
         className={`z-[5] origin-top scale-y-0 space-y-5 overflow-y-scroll px-5 py-3 transition duration-300 ${
           isOpen ? "scale-y-100" : ""
-        } fixed left-0 top-20 h-screen w-screen border-b-[1px] bg-white text-center lg:hidden`}
+        } fixed left-0 top-0 h-screen w-screen border-b-[1px] bg-white text-center lg:hidden`}
       >
         {/* Nav menu */}
+        <div className="mt-5">
+          <BurgerMenuIcon isOpen={isOpen} setIsOpen={setIsOpen} />
+        </div>
         <ul className="text-1rem flex flex-col">
           <li
             onMouseLeave={() => setSubmenuOpen(false)}
             className="flex flex-col items-center border-b-[1px] py-3 text-center transition"
           >
-            <div
-              onClick={() => setSubmenuOpen(!submenuOpen)}
-              className="flex cursor-pointer items-center justify-center font-bold"
-            >
-              <AiTwotoneShopping className="text-2xl text-black" />
-              <span>Shop</span>
-              <MdOutlineKeyboardArrowRight
-                className={`transition-transform ${
-                  submenuOpen ? "rotate-90" : ""
-                }`}
-              />
-            </div>
-
             <div className="group">
               <div
                 className={`max-h-0 origin-top scale-y-0 transform overflow-hidden text-black opacity-0 transition-all duration-300 ${
@@ -126,9 +144,18 @@ const Navbar = () => {
             </Link>
           ))}
         </ul>
-        <Link href="/login" className="btn-neutral btn text-white md:flex">
-          SIGN IN
-        </Link>
+        <button
+          type="button"
+          onClick={() => {
+            setIsLoggedIn(true);
+            handleNavbarClose();
+          }}
+          href="/login"
+          className="btn text-white hover:bg-blue-700 bg-blue-500"
+        >
+          <FaGoogle />
+          Sign in
+        </button>
       </nav>
     </>
   );

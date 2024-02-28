@@ -33,7 +33,7 @@ const HomeServices = () => {
       className="w-full"
     >
       <div className="w-full">
-        <div className="px-4 sm:px-6 bg-neutral lg:px-8 py-20">
+        <div className="px-4 sm:px-6 bg-gradient-to-r from-slate-900 to-slate-700 lg:px-8 py-20">
           <motion.div className="grid  gap-8 grid-cols-1 sm:grid-cols-3">
             {services.map((service, index) => (
               <motion.div
