@@ -7,7 +7,7 @@ const ProductSchema = new Schema(
     importPrice: { type: Number, default: 0 },
     price: { type: Number, required: true },
     discount: {
-      value: { type: Number, default: 0, min: 0 },
+      value: { type: Number, min: 0 },
       discountType: { type: String, enum: ["percentage", "fixed"] },
     },
     images: [{ type: String }],

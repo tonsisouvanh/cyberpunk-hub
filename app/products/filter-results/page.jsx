@@ -6,18 +6,23 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const ProductSearchResultsPage = () => {
+const ProductFilterResultsPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const keyword = searchParams.get("keyword");
+  const sale = searchParams.get("sale");
+  const isNewArrival = searchParams.get("isNewArrival");
 
   useEffect(() => {
     try {
       const fetchSearchResults = async () => {
-        const res = await fetch(`/api/products/search?keyword=${keyword}`);
+        let url = "";
+        if (sale) url = `/api/products/filter?sale=${sale}`;
+        else if (isNewArrival)
+          url = `/api/products/filter?isNewArrival=${isNewArrival}`;
+        const res = await fetch(url);
         if (res.status === 200) {
           const data = await res.json();
           setProducts(data);
@@ -32,7 +37,8 @@ const ProductSearchResultsPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [keyword]);
+  }, [isNewArrival, sale]);
+
   if (loading === true) return <Spinner loading={loading} />;
   return (
     <section className="max-w-full">
@@ -60,4 +66,4 @@ const ProductSearchResultsPage = () => {
   );
 };
 
-export default ProductSearchResultsPage;
+export default ProductFilterResultsPage;

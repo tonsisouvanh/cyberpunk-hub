@@ -1,8 +1,10 @@
 import { noimage } from "@/assets/images";
+import { calculateDiscountedPrice } from "@/utils/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 const ProductCard = ({ product }) => {
+  console.log("🚀 ~ ProductCard ~ product:", product);
   return (
     <div className="relative hover:shadow-2xl transition duration-300 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
       <Link
@@ -17,22 +19,46 @@ const ProductCard = ({ product }) => {
           sizes="100vw"
           className="object-cover"
         />
-        <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-          39% OFF
-        </span>
+        {product?.discount ? (
+          <>
+            {product?.discount?.discountType === "percentage" ? (
+              <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                {product?.discount?.value}% OFF
+              </span>
+            ) : (
+              <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                ຫຼູດ {product?.discount?.value?.toLocaleString()}
+              </span>
+            )}
+          </>
+        ) : (
+          ""
+        )}
       </Link>
       <div className="mt-4 px-5 pb-5">
-        <a href="#">
-          <h5 className="text-xl tracking-tight text-slate-900">
+        <Link href={`/products/${product._id}`}>
+          <h5 className="text-xl tracking-tight text-slate-900 hover:underline">
             {product.name}
           </h5>
-        </a>
+        </Link>
         <div className="mt-2 mb-5 flex items-center justify-between">
           <p>
             <span className="text-2xl mr-2 font-bold text-slate-900">
-              {product.price?.toLocaleString()}
+              {calculateDiscountedPrice(
+                product?.price,
+                product?.discount
+              ).toLocaleString()}
             </span>
-            <span className="text-sm text-slate-900 line-through">59,000</span>
+            {product?.discount ? (
+              <span className="text-sm text-slate-900 line-through">
+                {product?.price.toLocaleString()}
+              </span>
+            ) : (
+              ""
+            )}
+            {/* <span className="text-sm text-slate-900 line-through">
+              {product.price.toLocaleString()}
+            </span> */}
           </p>
           {/* <div className="flex items-center">
             <svg
@@ -85,8 +111,8 @@ const ProductCard = ({ product }) => {
             </span>
           </div> */}
         </div>
-        <a
-          href="#"
+        <Link
+          href={`/cart/${"123"}`}
           className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           <svg
@@ -104,7 +130,7 @@ const ProductCard = ({ product }) => {
             />
           </svg>
           Add to cart
-        </a>
+        </Link>
       </div>
     </div>
     // ====================================================== //

@@ -46,7 +46,7 @@ const Hero = () => {
                   sizes="100vw"
                 />
                 <div className="absolute rounded-xl inset-0 m-auto h-[20rem] w-[50rem] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-black via-black/50 to-transparent"></div>
-                <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-5 px-5 font-notosanslao text-white">
+                <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-5 px-5 text-white">
                   <div className="flex flex-col items-center justify-center">
                     <h2 className="w-fit hidden md:inline px-2 py-1 text-center font-arimo text-3xl font-bold md:text-4xl lg:text-5xl">
                       Discover the Latest Fashion

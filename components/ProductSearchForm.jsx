@@ -18,7 +18,7 @@ const ProductSearchForm = () => {
 
   return (
     <section className="">
-      <div className="bg-sky-950 text-white -skew-y-1">
+      <div className="bg-blue-950 text-white -skew-y-1">
         <div className="container mx-auto skew-y-1">
           <div className="flex flex-col items-center py-10 text-center lg:py-20">
             <div className="w-full px-4 lg:w-1/2 lg:px-0">

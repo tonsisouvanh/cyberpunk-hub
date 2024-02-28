@@ -152,7 +152,8 @@ const ProductDetailPage = () => {
               </div>
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
                 <div className="flex flex-row items-start lg:flex-col">
-                  {product && product?.images?.length > 0 &&
+                  {product &&
+                    product?.images?.length > 0 &&
                     product?.images?.map((image, index) => (
                       <button
                         key={index}
@@ -246,7 +247,7 @@ const ProductDetailPage = () => {
                 <input
                   type="radio"
                   name="type"
-                  defaultValue="Powder"
+                  // defaultValue="Powder"
                   className="peer sr-only"
                   defaultChecked=""
                 />
@@ -258,7 +259,7 @@ const ProductDetailPage = () => {
                 <input
                   type="radio"
                   name="type"
-                  defaultValue="Whole Bean"
+                  // defaultValue="Whole Bean"
                   className="peer sr-only"
                 />
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
@@ -269,7 +270,7 @@ const ProductDetailPage = () => {
                 <input
                   type="radio"
                   name="type"
-                  defaultValue="Groud"
+                  // defaultValue="Groud"
                   className="peer sr-only"
                 />
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
@@ -283,7 +284,7 @@ const ProductDetailPage = () => {
                 <input
                   type="radio"
                   name="subscription"
-                  defaultValue="4 Months"
+                  // defaultValue="4 Months"
                   className="peer sr-only"
                 />
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
@@ -295,7 +296,7 @@ const ProductDetailPage = () => {
                 <input
                   type="radio"
                   name="subscription"
-                  defaultValue="8 Months"
+                  // defaultValue="8 Months"
                   className="peer sr-only"
                   defaultChecked=""
                 />
@@ -308,7 +309,7 @@ const ProductDetailPage = () => {
                 <input
                   type="radio"
                   name="subscription"
-                  defaultValue="12 Months"
+                  // defaultValue="12 Months"
                   className="peer sr-only"
                 />
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">

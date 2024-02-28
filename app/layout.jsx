@@ -10,7 +10,7 @@ export const metadata = {
 const notoSansLao = Noto_Sans_Lao({
   subsets: ["lao"],
   display: "swap",
-  weight: ["400", "700"],
+  weight: ["400", "500", "700"],
 });
 const MainLayout = ({ children }) => {
   return (

@@ -12,15 +12,15 @@ const HomeFeaturedProducts = async () => {
         featuredDesc="ຄົ້ນພົບການເພີ່ມໃຫມ່ຫຼ້າສຸດຂອງຄໍເລັກຊັນຂອງພວກເຮົາ, ສະເຫນີທາງເລືອກທີ່ສົດຊື່ນແລະທັນສະໄຫມສໍາລັບທ່ານ."
         showButton={false}
         isScrollX={false}
-        showType={"newarrival"}
+        featuredType={"newarrival"}
       />
       <FeaturedProducts
-        products={products}
+        products={[]}
         featuredTitle="ເຄື່ອງຂາຍດີ"
         featuredDesc="ເຄື່ອງທີ່ລູກຄ້ານິຍົມ ແລະ ສົນໃຈ"
         showButton={false}
         isScrollX={false}
-        showType="bestsell"
+        featuredType="bestseller"
       />
       <FeaturedProducts
         products={products}
@@ -28,7 +28,7 @@ const HomeFeaturedProducts = async () => {
         featuredDesc="ຫຼຸດກະນ່ຳ"
         showButton={false}
         isScrollX={false}
-        showType="sale"
+        featuredType="sale"
       />
     </>
   );

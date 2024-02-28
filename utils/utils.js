@@ -14,12 +14,14 @@ export function formatPrice(price, decimalPlaces = 0) {
 
 export const calculateDiscountedPrice = (originalPrice, discount) => {
   let discountAmount;
-  if (discount.type === "percentage") {
-    discountAmount = (originalPrice * discount.value) / 100;
-  } else discountAmount = discount.value;
+  if (discount) {
+    if (discount.type === "percentage") {
+      discountAmount = (originalPrice * discount.value) / 100;
+    } else discountAmount = discount.value;
+    return originalPrice - discountAmount;
+  }
 
-  const discountedPrice = originalPrice - discountAmount;
-  return discountedPrice;
+  return originalPrice;
 };
 
 export const capitalizeFirstLetter = (str) => {

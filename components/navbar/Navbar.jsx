@@ -49,7 +49,7 @@ const Navbar = () => {
               {menuItems.map((item, index) => (
                 <li
                   key={index}
-                  className={`w-fit cursor-pointer transition rounded-md hover:bg-slate-900 hover:text-white py-2 px-6 ${
+                  className={`w-fit cursor-pointer transition rounded-md hover:bg-slate-900 hover:text-white py-2 px-4 ${
                     pathname === item.toPath && "bg-slate-900 text-white"
                   }`}
                   onClick={handleNavbarClose}
