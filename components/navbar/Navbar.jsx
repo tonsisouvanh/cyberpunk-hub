@@ -1,21 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { RiShoppingBag2Fill } from "react-icons/ri";
+import React, { useState } from "react";
 import { AiTwotoneShopping } from "react-icons/ai";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 import Logo from "../Logo";
+import BurgerMenuIcon from "../BurgerMenuIcon";
+import { usePathname } from "next/navigation";
 
 const menuItems = [
   { text: "ໜ້າຫຼັກ", toPath: "/" },
+  { text: "Shop now!", toPath: "/products" },
   // { id: 2, text: "Sale", toPath: "/products" },
   // { id: 3, text: "ເຄື່ອງມາໃໝ່", toPath: "/all-products/arrival" },
-  { text: "ກ່ຽວກັບພໍ່ຄ້າ", toPath: "/404" },
-  { text: "ຕິດຕໍ່", toPath: "/404" },
+  { text: "ກ່ຽວກັບພໍ່ຄ້າ", toPath: "/about" },
+  { text: "ຕິດຕໍ່", toPath: "/contact" },
 ];
-const genericHamburgerLine = `h-[0.2rem] w-6 my-[0.1rem] rounded-full bg-black transition ease transform duration-300`;
 
 const Navbar = () => {
+  const pathname = usePathname();
+  console.log("🚀 ~ Navbar ~ pathname:", pathname);
   const [isOpen, setIsOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -25,34 +28,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-neutral-100">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          {/* Desktop nav */}
+      {/* Desktop nav */}
+      <nav className="bg-white">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
-            <button
-              className="dborder-2 dborder-black group flex flex-col items-center justify-center rounded lg:hidden"
-              // onClick={() => toggleMenu()}
-            >
-              <div
-                className={`${genericHamburgerLine} ${
-                  isOpen
-                    ? "translate-y-[0.4rem] rotate-45 opacity-50 group-hover:opacity-100"
-                    : "opacity-50 group-hover:opacity-100"
-                }`}
-              />
-              <div
-                className={`${genericHamburgerLine} ${
-                  isOpen ? "opacity-0" : "opacity-50 group-hover:opacity-100"
-                }`}
-              />
-              <div
-                className={`${genericHamburgerLine} ${
-                  isOpen
-                    ? "-translate-y-[0.4rem] -rotate-45 opacity-50 group-hover:opacity-100"
-                    : "opacity-50 group-hover:opacity-100"
-                }`}
-              />
-            </button>
+            <BurgerMenuIcon isOpen={isOpen} setIsOpen={setIsOpen} />
 
             <Link
               href="/"
@@ -63,21 +43,12 @@ const Navbar = () => {
 
             {/* Nav menu */}
             <ul className="hidden items-center gap-5 text-lg lg:flex">
-              <li className="group relative flex w-fit flex-col items-center hover:border-b-2 hover:border-b-primary">
-                <Link
-                  href="/products"
-                  onClick={() => setSubmenuOpen(!submenuOpen)}
-                  className="flex cursor-pointer items-center"
-                >
-                  Shop
-                  <RiShoppingBag2Fill className="text-xl lg:text-2xl" />
-                </Link>
-              </li>
-
               {menuItems.map((item, index) => (
                 <li
                   key={index}
-                  className="w-fit cursor-pointer transition hover:border-b-2 hover:border-b-primary"
+                  className={`w-fit cursor-pointer transition rounded-md hover:bg-slate-900 hover:text-white py-2 px-6 ${
+                    pathname === item.toPath && "bg-slate-900 text-white"
+                  }`}
                   onClick={handleNavbarClose}
                 >
                   <Link href={item.toPath} className="whitespace-nowrap">
@@ -86,16 +57,17 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            {/* <UserWishlistCartIcons /> */}
+            {/* User profile here */}
           </div>
         </div>
       </nav>
       {/* Mobile nav */}
-      {/* <nav
-        className={`z-[5] origin-top scale-y-0 space-y-5 overflow-y-scroll px-5 py-3 font-notosanslao transition duration-300 ${
+      <nav
+        className={`z-[5] origin-top scale-y-0 space-y-5 overflow-y-scroll px-5 py-3 transition duration-300 ${
           isOpen ? "scale-y-100" : ""
-        } fixed left-0 top-16 h-screen w-screen border-b-[1px] bg-white text-center lg:hidden`}
+        } fixed left-0 top-20 h-screen w-screen border-b-[1px] bg-white text-center lg:hidden`}
       >
+        {/* Nav menu */}
         <ul className="text-1rem flex flex-col">
           <li
             onMouseLeave={() => setSubmenuOpen(false)}
@@ -157,8 +129,7 @@ const Navbar = () => {
         <Link href="/login" className="btn-neutral btn text-white md:flex">
           SIGN IN
         </Link>
-      </nav> */}
-      {/* ================== */}
+      </nav>
     </>
   );
 };

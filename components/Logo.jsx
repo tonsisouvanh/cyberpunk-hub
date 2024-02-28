@@ -2,7 +2,7 @@ import { cyberpunk, cyberpunktext } from "@/assets/images";
 import Image from "next/image";
 const Logo = () => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center relative gap-2">
       <Image
         className="h-auto w-[2rem] object-cover sm:w-[3rem]"
         src={cyberpunk}

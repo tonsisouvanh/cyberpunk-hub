@@ -1,0 +1,131 @@
+[
+  {
+    "name": "Leather Biker Jacket",
+    "description": "A stylish leather jacket perfect for the urban explorer.",
+    "importPrice": 79000,
+    "price": 129000,
+    "images": ["jacket_image1.jpg", "jacket_image2.jpg"],
+    "categories": ["Jackets", "Men's Fashion"],
+    "brand": "UrbanRide",
+    "isNewArrival": true,
+    "isFeatured": true,
+    "ratings": 4.8,
+    "inventory": [
+      { "size": "S", "quantity": 15 },
+      { "size": "M", "quantity": 20 },
+      { "size": "L", "quantity": 15 },
+      { "size": "XL", "quantity": 10 }
+    ]
+  },
+  {
+    "name": "Bohemian Maxi Skirt",
+    "description": "Flowy and vibrant, this bohemian maxi skirt is a summer essential.",
+    "importPrice": 39000,
+    "price": 59000,
+    "images": ["skirt_image1.jpg", "skirt_image2.jpg"],
+    "categories": ["Skirts", "Women's Fashion"],
+    "brand": "BohoChic",
+    "isNewArrival": false,
+    "isFeatured": true,
+    "ratings": 4.6,
+    "inventory": [
+      { "size": "S", "quantity": 25 },
+      { "size": "M", "quantity": 30 },
+      { "size": "L", "quantity": 20 }
+    ]
+  },
+  {
+    "name": "Classic Oxford Shirt",
+    "description": "Timeless and versatile, the classic oxford shirt for any occasion.",
+    "importPrice": 29000,
+    "price": 49000,
+    "images": ["shirt_image1.jpg", "shirt_image2.jpg"],
+    "categories": ["Shirts", "Men's Fashion"],
+    "brand": "TimelessWear",
+    "isNewArrival": false,
+    "isFeatured": false,
+    "ratings": 4.4,
+    "inventory": [
+      { "size": "S", "quantity": 25 },
+      { "size": "M", "quantity": 30 },
+      { "size": "L", "quantity": 25 },
+      { "size": "XL", "quantity": 10 }
+    ]
+  },
+  {
+    "name": "Elegant Evening Gown",
+    "description": "Make a statement with this elegant evening gown for special occasions.",
+    "importPrice": 89000,
+    "price": 149000,
+    "images": ["gown_image1.jpg", "gown_image2.jpg"],
+    "categories": ["Dresses", "Women's Fashion"],
+    "brand": "EleganceCouture",
+    "isNewArrival": true,
+    "isFeatured": true,
+    "ratings": 4.9,
+    "inventory": [
+      { "size": "XS", "quantity": 10 },
+      { "size": "S", "quantity": 15 },
+      { "size": "M", "quantity": 15 },
+      { "size": "L", "quantity": 10 }
+    ]
+  },
+  {
+    "name": "Athletic Performance Shorts",
+    "description": "Stay active with these high-performance athletic shorts.",
+    "importPrice": 24000,
+    "price": 39000,
+    "images": ["shorts_image1.jpg", "shorts_image2.jpg"],
+    "categories": ["Athletic Wear", "Men's Fashion"],
+    "brand": "ActiveLife",
+    "isNewArrival": false,
+    "isFeatured": true,
+    "ratings": 4.7,
+    "inventory": [
+      { "size": "S", "quantity": 20 },
+      { "size": "M", "quantity": 25 },
+      { "size": "L", "quantity": 20 },
+      { "size": "XL", "quantity": 15 }
+    ]
+  },
+  {
+    "name": "Slim Fit Denim Jeans",
+    "description": "Classic slim-fit jeans made with high-quality denim.",
+    "importPrice": 35000,
+    "price": 59000,
+    "discount": {
+      "value": 10,
+      "discountType": "percentage"
+    },
+    "images": ["jeans_image1.jpg", "jeans_image2.jpg"],
+    "categories": ["Denim", "Jeans", "Men's Fashion"],
+    "brand": "FashionCo",
+    "isNewArrival": false,
+    "isFeatured": true,
+    "ratings": 4.5,
+    "inventory": [
+      { "size": "S", "quantity": 20 },
+      { "size": "M", "quantity": 30 },
+      { "size": "L", "quantity": 25 },
+      { "size": "XL", "quantity": 25 }
+    ]
+  },
+  {
+    "name": "Casual Summer Dress",
+    "description": "Lightweight and comfortable summer dress for any occasion.",
+    "importPrice": 29000,
+    "price": 49000,
+    "images": ["dress_image1.jpg", "dress_image2.jpg"],
+    "categories": ["Dresses", "Women's Fashion"],
+    "brand": "ChicStyle",
+    "isNewArrival": true,
+    "isFeatured": false,
+    "ratings": 4.2,
+    "inventory": [
+      { "size": "XS", "quantity": 15 },
+      { "size": "S", "quantity": 25 },
+      { "size": "M", "quantity": 20 },
+      { "size": "L", "quantity": 20 }
+    ]
+  }
+]
