@@ -1,5 +1,5 @@
 import connectDB from "@/config/database";
-import Product from "@/models/Product";
+import {Product} from "@/models/Product";
 
 // GET /api/products/filter?<field>=<value> (One field only)
 export const GET = async (req) => {

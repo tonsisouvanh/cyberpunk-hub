@@ -27,6 +27,19 @@ const ProductSchema = new Schema(
     timestamps: true,
   }
 );
+const CartItemSchema = new Schema({
+  product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+  quantity: { type: Number, default: 1 },
+});
 
+const CartSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: "User" },
+  items: [CartItemSchema],
+}, {
+  timestamps: true,
+});
+
+const Cart = models.Cart || model("Cart", CartSchema);
 const Product = models.Product || model("Product", ProductSchema);
-export default Product;
+
+export { Product, Cart };

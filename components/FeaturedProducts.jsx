@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -16,14 +15,14 @@ const FeaturedProducts = ({
   featuredDesc = "No description",
   featuredType,
 }) => {
-  const getRandomElements = (array, numberOfElements) => {
-    // Clone the array to avoid modifying the original
-    const shuffledArray = [...array].sort(() => Math.random() - 0.5);
+  // const getRandomElements = (array, numberOfElements) => {
+  //   // Clone the array to avoid modifying the original
+  //   const shuffledArray = [...array].sort(() => Math.random() - 0.5);
 
-    // Take the first `numberOfElements` elements
-    const randomElements = shuffledArray.slice(0, numberOfElements);
-    return randomElements;
-  };
+  //   // Take the first `numberOfElements` elements
+  //   const randomElements = shuffledArray.slice(0, numberOfElements);
+  //   return randomElements;
+  // };
 
   const getFeaturedType = () => {
     if (featuredType === "newarrival") {
@@ -34,12 +33,24 @@ const FeaturedProducts = ({
       return "";
     }
   };
-  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  useEffect(() => {
-    const randomSlice = getRandomElements(products, 4);
-    setFilteredProducts(randomSlice);
-  }, [products]);
+  const getFilteredData = () => {
+    let filteredProducts = [];
+    if (featuredType === "newarrival") {
+      filteredProducts = products.filter(
+        (product) => product.isNewArrival === true
+      );
+    } else if (featuredType === "sale") {
+      filteredProducts = products.filter(
+        (product) => product.discount && product.discount.value
+      );
+    }
+
+    return filteredProducts;
+  };
+
+  const filteredProducts = getFilteredData();
+
   return (
     <>
       <motion.section

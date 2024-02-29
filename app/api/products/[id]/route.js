@@ -1,5 +1,5 @@
 import connectDB from "@/config/database";
-import Product from "@/models/Product";
+import {Product} from "@/models/Product";
 // import { getSessionUser } from "@/utils/getSessionUser";
 
 

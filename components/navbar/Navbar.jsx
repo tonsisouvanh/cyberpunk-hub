@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "../Logo";
 import BurgerMenuIcon from "../BurgerMenuIcon";
 import { usePathname } from "next/navigation";
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaGratipay, FaListAlt, FaSignOutAlt } from "react-icons/fa";
 import { BiCartAlt } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import Image from "next/image";
+import { noimage } from "@/assets/images";
 
 const menuItems = [
   { text: "ໜ້າຫຼັກ", toPath: "/" },
@@ -18,12 +21,24 @@ const menuItems = [
 ];
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  const profileImage = session?.user?.image;
+  const [providers, setProviders] = useState(null);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const setAuthProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+
+    setAuthProviders();
+  }, []);
 
   const handleNavbarClose = () => {
     setIsOpen(false);
@@ -47,24 +62,93 @@ const Navbar = () => {
             {/* Nav menu */}
             <ul className="hidden items-center gap-5 text-lg lg:flex">
               {menuItems.map((item, index) => (
-                <li
+                <Link
                   key={index}
-                  className={`w-fit cursor-pointer transition rounded-md hover:bg-slate-900 hover:text-white py-2 px-4 ${
-                    pathname === item.toPath && "bg-slate-900 text-white"
-                  }`}
-                  onClick={handleNavbarClose}
+                  href={item.toPath}
+                  className="whitespace-nowrap"
                 >
-                  <Link href={item.toPath} className="whitespace-nowrap">
+                  <li
+                    className={`w-fit cursor-pointer transition rounded-md hover:bg-slate-900 hover:text-white py-2 px-4 ${
+                      pathname === item.toPath && "bg-slate-900 text-white"
+                    }`}
+                    onClick={handleNavbarClose}
+                  >
                     {item.text}
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               ))}
             </ul>
-            {isLoggedIn ? (
+            {session && (
               <div className="flex items-center justify-center gap-2">
-                <button className="btn btn-circle btn-ghost">
-                  <CgProfile className="text-neutral" size={30} />
-                </button>
+                <div className="dropdown">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-circle m-1"
+                  >
+                    {profileImage ? (
+                      <>
+                        <div className="avatar">
+                          <div className="w-8 rounded-full">
+                            <Image
+                              src={profileImage || noimage}
+                              alt=""
+                              width={500}
+                              height={500}
+                              sizes="100vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <CgProfile className="text-neutral" size={30} />
+                    )}
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li
+                      onClick={() => {
+                        signOut();
+                      }}
+                    >
+                      <a>
+                        <FaGratipay size={15} />
+                        Wishlist
+                      </a>
+                      <a>
+                        <FaListAlt size={15} />
+                        Orders
+                      </a>
+                      <a>
+                        <FaSignOutAlt size={15} />
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                {/* <button className="btn btn-circle btn-ghost">
+                  {profileImage ? (
+                    <>
+                      <div className="avatar">
+                        <div className="w-8 rounded-full">
+                          <Image
+                            src={profileImage || noimage}
+                            alt=""
+                            width={500}
+                            height={500}
+                            sizes="100vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <CgProfile className="text-neutral" size={30} />
+                  )}
+                </button> */}
                 <Link
                   href={`/cart/${1}`}
                   className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
@@ -74,18 +158,25 @@ const Navbar = () => {
                   <span className="absolute top-2 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
                 </Link>
               </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setIsLoggedIn(true)}
-                href="/login"
-                className="btn text-white hover:bg-blue-700 bg-blue-500"
-              >
-                <FaGoogle />
-                Sign in
-              </button>
             )}
-            {/* User profile here */}
+            {!session && (
+              <div className="hidden md:block md:ml-6">
+                <div className="flex items-center">
+                  {providers &&
+                    Object.values(providers).map((provider) => (
+                      <button
+                        key={provider.id}
+                        type="button"
+                        onClick={() => signIn(provider.id)}
+                        className="btn text-white hover:bg-blue-700 bg-blue-500"
+                      >
+                        <FaGoogle />
+                        Sign in
+                      </button>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
@@ -144,18 +235,56 @@ const Navbar = () => {
             </Link>
           ))}
         </ul>
-        <button
-          type="button"
-          onClick={() => {
-            setIsLoggedIn(true);
-            handleNavbarClose();
-          }}
-          href="/login"
-          className="btn text-white hover:bg-blue-700 bg-blue-500"
-        >
-          <FaGoogle />
-          Sign in
-        </button>
+        {session && (
+          <div className="flex items-center justify-center gap-2">
+            <button className="btn btn-circle btn-ghost">
+              {profileImage ? (
+                <>
+                  <div className="avatar">
+                    <div className="w-8 rounded-full">
+                      <Image
+                        src={profileImage || noimage}
+                        alt=""
+                        width={500}
+                        height={500}
+                        sizes="100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <CgProfile className="text-neutral" size={30} />
+              )}
+            </button>
+            <Link
+              href={`/cart/${1}`}
+              className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
+            >
+              <BiCartAlt className="text-neutral" size={30} />
+
+              <span className="absolute top-2 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
+            </Link>
+          </div>
+        )}
+        {!session && (
+          <div className="hidden md:block md:ml-6">
+            <div className="flex items-center">
+              {providers &&
+                Object.values(providers).map((provider) => (
+                  <button
+                    key={provider.id}
+                    type="button"
+                    onClick={() => signIn(provider.id)}
+                    className="btn text-white hover:bg-blue-700 bg-blue-500"
+                  >
+                    <FaGoogle />
+                    Sign in
+                  </button>
+                ))}
+            </div>
+          </div>
+        )}
       </nav>
     </>
   );

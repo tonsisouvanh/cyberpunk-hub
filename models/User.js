@@ -14,7 +14,13 @@ const UserSchema = new Schema(
     image: {
       type: String,
     },
-    bookmarks: [{ type: Schema.Types.ObjectId, ref: "Property" }],
+    role: {
+      type: String,
+      enum: ["user", "admin"], // Add roles as needed
+      default: "user",
+    },
+    cart: { type: Schema.Types.ObjectId, ref: "Cart" },
+    orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
   },
   {
     timestamps: true,

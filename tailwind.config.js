@@ -17,7 +17,6 @@ module.exports = {
         arimo: ["Arimo", "sans-serif"],
         lato: ["Lato", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
-        notosanslao: ["notosanslao", "sans-serif"],
       },
     },
   },
