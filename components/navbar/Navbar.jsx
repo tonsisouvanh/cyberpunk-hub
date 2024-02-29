@@ -4,7 +4,13 @@ import Link from "next/link";
 import Logo from "../Logo";
 import BurgerMenuIcon from "../BurgerMenuIcon";
 import { usePathname } from "next/navigation";
-import { FaGoogle, FaGratipay, FaListAlt, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaArtstation,
+  FaGoogle,
+  FaGratipay,
+  FaListAlt,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { BiCartAlt } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
@@ -22,6 +28,7 @@ const menuItems = [
 
 const Navbar = () => {
   const { data: session } = useSession();
+  console.log("🚀 ~ Navbar ~ session:", session);
   const profileImage = session?.user?.image;
   const [providers, setProviders] = useState(null);
   const pathname = usePathname();
@@ -78,6 +85,7 @@ const Navbar = () => {
                 </Link>
               ))}
             </ul>
+            {/* User profile */}
             {session && (
               <div className="flex items-center justify-center gap-2">
                 <div className="dropdown">
@@ -109,19 +117,31 @@ const Navbar = () => {
                     tabIndex={0}
                     className="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
+                    <li>
+                      <a>
+                        <FaGratipay size={15} />
+                        Wishlist
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <FaListAlt size={15} />
+                        Orders
+                      </a>
+                    </li>
+                    <li>
+                      {session.role === "admin" && (
+                        <Link href="/dashboard">
+                          <FaArtstation size={15} />
+                          Admin Dashboard
+                        </Link>
+                      )}
+                    </li>
                     <li
                       onClick={() => {
                         signOut();
                       }}
                     >
-                      <a>
-                        <FaGratipay size={15} />
-                        Wishlist
-                      </a>
-                      <a>
-                        <FaListAlt size={15} />
-                        Orders
-                      </a>
                       <a>
                         <FaSignOutAlt size={15} />
                         Logout
@@ -129,26 +149,6 @@ const Navbar = () => {
                     </li>
                   </ul>
                 </div>
-                {/* <button className="btn btn-circle btn-ghost">
-                  {profileImage ? (
-                    <>
-                      <div className="avatar">
-                        <div className="w-8 rounded-full">
-                          <Image
-                            src={profileImage || noimage}
-                            alt=""
-                            width={500}
-                            height={500}
-                            sizes="100vw"
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <CgProfile className="text-neutral" size={30} />
-                  )}
-                </button> */}
                 <Link
                   href={`/cart/${1}`}
                   className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
@@ -159,6 +159,7 @@ const Navbar = () => {
                 </Link>
               </div>
             )}
+            {/* sign in */}
             {!session && (
               <div className="hidden md:block md:ml-6">
                 <div className="flex items-center">
@@ -177,6 +178,8 @@ const Navbar = () => {
                 </div>
               </div>
             )}
+
+            {/* Admin */}
           </div>
         </div>
       </nav>
@@ -237,26 +240,51 @@ const Navbar = () => {
         </ul>
         {session && (
           <div className="flex items-center justify-center gap-2">
-            <button className="btn btn-circle btn-ghost">
-              {profileImage ? (
-                <>
-                  <div className="avatar">
-                    <div className="w-8 rounded-full">
-                      <Image
-                        src={profileImage || noimage}
-                        alt=""
-                        width={500}
-                        height={500}
-                        sizes="100vw"
-                        className="object-cover"
-                      />
+            <div className="dropdown">
+              <div tabIndex={0} role="button" className="btn btn-circle m-1">
+                {profileImage ? (
+                  <>
+                    <div className="avatar">
+                      <div className="w-8 rounded-full">
+                        <Image
+                          src={profileImage || noimage}
+                          alt=""
+                          width={500}
+                          height={500}
+                          sizes="100vw"
+                          className="object-cover"
+                        />
+                      </div>
                     </div>
-                  </div>
-                </>
-              ) : (
-                <CgProfile className="text-neutral" size={30} />
-              )}
-            </button>
+                  </>
+                ) : (
+                  <CgProfile className="text-neutral" size={30} />
+                )}
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
+                  <a>
+                    <FaGratipay size={15} />
+                    Wishlist
+                  </a>
+                  <a>
+                    <FaListAlt size={15} />
+                    Orders
+                  </a>
+                  <a>
+                    <FaSignOutAlt size={15} />
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
             <Link
               href={`/cart/${1}`}
               className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
@@ -268,8 +296,8 @@ const Navbar = () => {
           </div>
         )}
         {!session && (
-          <div className="hidden md:block md:ml-6">
-            <div className="flex items-center">
+          <div className="">
+            <div className="flex items-center justify-center">
               {providers &&
                 Object.values(providers).map((provider) => (
                   <button
