@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { fadeFromTopAnimate } from "@/utils/animation";
 import { noimage } from "@/assets/images";
-import ProductRating from "./ProductRating";
+import ProductRating from "./Rating";
 
 const FeaturedProducts = ({
   products,

@@ -13,7 +13,7 @@ const notoSansLao = Noto_Sans_Lao({
   display: "swap",
   weight: ["400", "500", "700"],
 });
-const MainLayout = ({ children }) => {
+const ShopLayout = ({ children }) => {
   return (
     <AuthProvider>
       <html lang="en">
@@ -30,4 +30,4 @@ const MainLayout = ({ children }) => {
   );
 };
 
-export default MainLayout;
+export default ShopLayout;

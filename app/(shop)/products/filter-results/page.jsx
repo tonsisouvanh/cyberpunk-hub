@@ -2,6 +2,7 @@
 import ProductCard from "@/components/ProductCard";
 import ProductSearchForm from "@/components/ProductSearchForm";
 import Spinner from "@/components/Spinner";
+import GoBackButton from "@/components/buttons/GoBackButton";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -43,15 +44,11 @@ const ProductFilterResultsPage = () => {
   return (
     <section className="max-w-full">
       <ProductSearchForm />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-        <button
-          onClick={() => {
-            router.push("/products");
-          }}
-          className="btn btn-link text-blue-600"
-        >
-          Back To All Products
-        </button>
+        <div className="mb-4">
+          <GoBackButton style={"btn rounded-full px-6 btn-neutral"} />
+        </div>
         {products?.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center md:grid-cols-3 gap-6">
             {products?.map((product, index) => (

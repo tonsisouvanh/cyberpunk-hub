@@ -28,7 +28,6 @@ const menuItems = [
 
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log("🚀 ~ Navbar ~ session:", session);
   const profileImage = session?.user?.image;
   const [providers, setProviders] = useState(null);
   const pathname = usePathname();
