@@ -18,7 +18,7 @@ const ShopLayout = ({ children }) => {
     <AuthProvider>
       <html lang="en">
         <body
-          className={`${notoSansLao.className} relative bg-gradient-to-r from-slate-50 to-gray-100`}
+          className={`${notoSansLao.className} min-h-screen flex flex-col relative bg-gradient-to-r from-slate-50 to-gray-100`}
         >
           <Navbar />
           <main>{children}</main>
