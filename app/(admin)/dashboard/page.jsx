@@ -1,4 +1,6 @@
+"use client";
 import Stats from "@/components/admin/Stats";
+import withAuth from "@/components/auth/withAuth";
 import React from "react";
 
 const DashboardPage = () => {
@@ -216,4 +218,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default withAuth(DashboardPage);
