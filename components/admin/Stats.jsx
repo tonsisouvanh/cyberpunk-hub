@@ -4,10 +4,10 @@ const Stats = () => {
   return (
     <>
       {/* <div className="m-10 grid gap-5 sm:grid-cols-3 mx-auto max-w-screen-lg">
-        <div className="px-4 py-6 shadow-lg shadow-blue-100">
+        <div className="px-4 py-6 shadow-lg shadow-blue-950">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-14 w-14 rounded-xl bg-blue-50 p-4 text-blue-300"
+            className="h-14 w-14 rounded-xl bg-blue950 p-4 text-blue-950"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -38,7 +38,7 @@ const Stats = () => {
           </p>
           <span className="text-xs text-gray-400">+4.9%</span>
         </div>
-        <div className="px-4 py-6 shadow-lg shadow-blue-100">
+        <div className="px-4 py-6 shadow-lg shadow-blue-950">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-14 w-14 rounded-xl bg-rose-50 p-4 text-rose-300"
@@ -71,7 +71,7 @@ const Stats = () => {
           </p>
           <span className="text-xs text-gray-400">+4.9%</span>
         </div>
-        <div className="px-4 py-6 shadow-lg shadow-blue-100">
+        <div className="px-4 py-6 shadow-lg shadow-blue-950">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-14 w-14 rounded-xl bg-green-50 p-4 text-green-300"
@@ -108,10 +108,10 @@ const Stats = () => {
         </div>
       </div>
       <div className="m-10 grid gap-5 sm:grid-cols-3  mx-auto max-w-screen-lg">
-        <div className="px-4 py-6 shadow-lg shadow-blue-100">
+        <div className="px-4 py-6 shadow-lg shadow-blue-950">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-14 w-14 rounded-xl bg-blue-400 p-4 text-white"
+            className="h-14 w-14 rounded-xl bg-blue-950 p-4 text-white"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -142,7 +142,7 @@ const Stats = () => {
           </p>
           <span className="text-xs text-gray-400">+4.9%</span>
         </div>
-        <div className="px-4 py-6 shadow-lg shadow-blue-100">
+        <div className="px-4 py-6 shadow-lg shadow-blue-950">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-14 w-14 rounded-xl bg-rose-400 p-4 text-white"
@@ -175,7 +175,7 @@ const Stats = () => {
           </p>
           <span className="text-xs text-gray-400">+4.9%</span>
         </div>
-        <div className="px-4 py-6 shadow-lg shadow-blue-100">
+        <div className="px-4 py-6 shadow-lg shadow-blue-950">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-14 w-14 rounded-xl bg-green-400 p-4 text-white"
@@ -211,12 +211,12 @@ const Stats = () => {
           <span className="text-xs text-gray-400">+4.9%</span>
         </div>
       </div> */}
-      <div className="font-[sans-serif] text-[#333]">
+      <div className="font-[sans-serif] mx-auto max-w-screen-lg text-[#333]">
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-x-6 gap-y-12 divide-x divide-gray-300">
           <div className="text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="fill-blue-600 w-10 inline-block"
+              className="fill-blue-950 w-10 inline-block"
               viewBox="0 0 512 512"
             >
               <path
@@ -228,13 +228,13 @@ const Stats = () => {
                 data-original="#000000"
               />
             </svg>
-            <h3 className="text-3xl font-extrabold text-blue-600 mt-5">400+</h3>
+            <h3 className="text-3xl font-extrabold text-blue-950 mt-5">400+</h3>
             <p className="font-semibold mt-3">Unique Visitors</p>
           </div>
           <div className="text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="fill-blue-600 w-10 inline-block"
+              className="fill-blue-950 w-10 inline-block"
               viewBox="0 0 512 512"
             >
               <path
@@ -244,13 +244,13 @@ const Stats = () => {
                 data-original="#000000"
               />
             </svg>
-            <h3 className="text-3xl font-extrabold text-blue-600 mt-5">450+</h3>
+            <h3 className="text-3xl font-extrabold text-blue-950 mt-5">450+</h3>
             <p className="font-semibold mt-3">Total Sales</p>
           </div>
           <div className="text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="fill-blue-600 w-10 inline-block"
+              className="fill-blue-950 w-10 inline-block"
               viewBox="0 0 28 28"
             >
               <path
@@ -259,13 +259,13 @@ const Stats = () => {
                 data-original="#000000"
               />
             </svg>
-            <h3 className="text-3xl font-extrabold text-blue-600 mt-5">500+</h3>
+            <h3 className="text-3xl font-extrabold text-blue-950 mt-5">500+</h3>
             <p className="font-semibold mt-3">Customer Satisfaction</p>
           </div>
           <div className="text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="fill-blue-600 w-10 inline-block"
+              className="fill-blue-950 w-10 inline-block"
               viewBox="0 0 512 512"
             >
               <path
@@ -273,7 +273,7 @@ const Stats = () => {
                 data-original="#000000"
               />
             </svg>
-            <h3 className="text-3xl font-extrabold text-blue-600 mt-5">600+</h3>
+            <h3 className="text-3xl font-extrabold text-blue-950 mt-5">600+</h3>
             <p className="font-semibold mt-3">System Uptime (in hours)</p>
           </div>
         </div>

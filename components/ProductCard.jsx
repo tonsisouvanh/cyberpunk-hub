@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 const ProductCard = ({ product }) => {
-  console.log("🚀 ~ ProductCard ~ product:", product);
   return (
     <div className="relative hover:shadow-2xl transition duration-300 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
       <Link
@@ -19,6 +18,7 @@ const ProductCard = ({ product }) => {
           sizes="100vw"
           className="object-cover"
         />
+        {/* TODO: re check if this count display correctly */}
         {product?.discount ? (
           <>
             {product?.discount?.discountType === "percentage" ? (

@@ -2,25 +2,9 @@
 
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import { useSession, getProviders } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function withAuth(Component) {
-  //   return function WithAuth(props) {
-  //     const { data } = useSession();
-  //     console.log("🚀 ~ WithAuth ~ data:", data);
-
-  //     useEffect(() => {
-  //       if (!data || data?.role !== "admin") {
-  //         redirect("/");
-  //       }
-  //     }, [data]);
-
-  //     if (!data) {
-  //       return null;
-  //     }
-
-  //     return <Component {...props} />;
-  //   };
   return function WithAuth(props) {
     const { data: session, status } = useSession();
     useEffect(() => {

@@ -1,4 +1,5 @@
 "use client";
+import Spinner from "@/components/Spinner";
 import PageHeader from "@/components/admin/PageHeader";
 import ProductTable from "@/components/admin/ProductTable";
 import Link from "next/link";
@@ -31,7 +32,7 @@ const ManageProductsPage = () => {
   if (loading) {
     return (
       <>
-        <p>Loading...</p>
+        <Spinner loading={loading} />
       </>
     );
   }

@@ -7,7 +7,7 @@ const ProductSchema = new Schema(
     importPrice: { type: Number, default: 0 },
     price: { type: Number, required: true },
     discount: {
-      value: { type: Number, min: 0 },
+      value: { type: Number, min: 0, default: 0 },
       discountType: { type: String, enum: ["percentage", "fixed"] },
     },
     images: [{ type: String }],
@@ -18,8 +18,10 @@ const ProductSchema = new Schema(
     ratings: { type: Number, default: 0 },
     inventory: [
       {
+        id: { type: String, required: true, unique: true }, // You can use ObjectId or String based on your requirements
         size: { type: String },
         quantity: { type: Number },
+        gender: { type: String, default: "male" },
       },
     ],
   },
@@ -32,12 +34,15 @@ const CartItemSchema = new Schema({
   quantity: { type: Number, default: 1 },
 });
 
-const CartSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  items: [CartItemSchema],
-}, {
-  timestamps: true,
-});
+const CartSchema = new Schema(
+  {
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    items: [CartItemSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Cart = models.Cart || model("Cart", CartSchema);
 const Product = models.Product || model("Product", ProductSchema);

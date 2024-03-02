@@ -19,15 +19,14 @@ const sidebarMenuItems = [
   { name: "Products", route: "/manage-products", icon: <FaBoxes size={15} /> },
   { name: "User Carts", route: "/cart", icon: <FaCartArrowDown size={15} /> },
   { name: "Orders", route: "/orders", icon: <FaFileInvoice size={15} /> },
-  { name: "Ecommerce Site", route: "/", icon: <FaGlobe size={15} /> },
-  // Add more items as needed, e.g., an Admin Panel for users with the "admin" role
+  { name: "E-commerce Site", route: "/", icon: <FaGlobe size={15} /> },
 ];
 
 const Sidebar = () => {
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content absolute top-2 left-2">
+      <div className="drawer-content absolute top-2 left-2 ">
         {/* Page content here */}
         <label htmlFor="my-drawer" className="btn btn-ghost drawer-button">
           {" "}

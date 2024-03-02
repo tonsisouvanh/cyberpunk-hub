@@ -152,7 +152,7 @@ const rotateAnimateFromRight = {
 //         <motion.div variants={fadeIn}>Item 1</motion.div>
 //         <motion.div variants={fadeIn}>Item 2</motion.div>
 //         <motion.div variants={fadeIn}>Item 3</motion.div>
-// </motion.div>
+// </motion.div>a
 
 const bounceAnimate = {
   offscreen: {

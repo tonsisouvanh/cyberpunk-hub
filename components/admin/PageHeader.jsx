@@ -6,7 +6,7 @@ const PageHeader = ({ headerText = "No Header" }) => {
       <div className="flex items-center justify-between">
         <p
           tabIndex={0}
-          className="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-neutral"
+          className="focus:outline-none text-base uppercase sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-neutral"
         >
           {headerText}
         </p>
