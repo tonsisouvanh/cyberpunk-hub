@@ -136,7 +136,7 @@ const InventoryInput = ({ inventoryData, setInventoryData }) => {
             onClick={handleAddInventory}
             className="btn btn-ghost btn-outline btn-wide"
           >
-            Add
+            Add Size
           </button>
         </div>
       </div>

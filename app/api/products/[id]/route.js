@@ -1,5 +1,6 @@
 import connectDB from "@/config/database";
 import {Product} from "@/models/Product";
+import { getSessionUser } from "@/utils/getSessionUser";
 // import { getSessionUser } from "@/utils/getSessionUser";
 
 
@@ -25,6 +26,7 @@ export const DELETE = async (req, { params }) => {
   try {
     const productId = params.id;
     const sessionUser = await getSessionUser();
+    console.log("🚀 ~ DELETE ~ sessionUser:", sessionUser)
     if (!sessionUser || !sessionUser.userId) {
       return new Response("User ID is required", { status: 401 });
     }
@@ -37,9 +39,9 @@ export const DELETE = async (req, { params }) => {
     if (!product) return new Response("Product Not Found", { status: 404 });
 
     // Verify ownership
-    if (product.owner.toString() !== userId) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+    // if (product.owner.toString() !== userId) {
+    //   return new Response("Unauthorized", { status: 401 });
+    // }
 
     await product.deleteOne();
 

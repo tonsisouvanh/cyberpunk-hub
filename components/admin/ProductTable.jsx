@@ -1,10 +1,43 @@
 import { noimage } from "@/assets/images";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import ProductRating from "../Rating";
+import { toast } from "react-toastify";
+import Spinner from "../Spinner";
 
-const ProductTable = ({ products }) => {
+const ProductTable = ({ products, setProducts }) => {
+  const [loading, setLoading] = useState(false);
+  const handleDeleteProduct = async (productId) => {
+    const confirmed = window.confirm("Are you sure you want to delete");
+
+    if (!confirmed) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/products/${productId}`, {
+        method: "DELETE",
+      });
+
+      if (res.status === 200) {
+        const updatedProperties = products.filter(
+          (property) => property._id !== productId
+        );
+
+        setProducts(updatedProperties);
+
+        toast.success("Product deleted");
+      } else {
+        toast.error("Failed to delete");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to delete");
+    } finally {
+      setLoading(false);
+    }
+  };
+  if (loading) return <Spinner loading={loading} />;
   return (
     <div className="overflow-x-auto pb-8">
       <table className="min-w-full bg-white font-[sans-serif]">
@@ -68,7 +101,10 @@ const ProductTable = ({ products }) => {
                 <button className="btn btn-ghost btn-circle btn-sm">
                   <FaPencilAlt className="text-sky-900" size={12} />
                 </button>
-                <button className="btn btn-ghost btn-circle btn-sm">
+                <button
+                  onClick={() => handleDeleteProduct(product?._id)}
+                  className="btn btn-ghost btn-circle btn-sm"
+                >
                   <FaTrash className="text-red-600" size={12} />
                 </button>
               </td>

@@ -52,7 +52,7 @@ const ManageProductsPage = () => {
           Add Product
         </Link>
       </div>
-      <ProductTable products={products} />
+      <ProductTable products={products} setProducts={setProducts}/>
     </>
   );
 };

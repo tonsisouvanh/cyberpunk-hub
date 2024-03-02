@@ -376,7 +376,6 @@ const ProductAddForm = () => {
               <div>
                 <button
                   type="submit"
-                  // className="hover:shadow-form w-full rounded-md bg-sky-950 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                   className="btn btn-neutral bg-sky-950 btn-block text-white"
                 >
                   {loading ? (
