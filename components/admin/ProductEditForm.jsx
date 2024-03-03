@@ -8,6 +8,8 @@ import { useParams, useRouter } from "next/navigation";
 import { CategoriesOptions } from "@/data/data";
 import { fetchProduct } from "@/utils/request";
 import Spinner from "../Spinner";
+import Image from "next/image";
+import { noimage } from "@/assets/images";
 const initialProductState = {
   name: "",
   description: "",
@@ -17,21 +19,12 @@ const initialProductState = {
     value: "",
     discountType: "percentage",
   },
-  // images: [],
   categories: [],
-  brand: "",
-  // isNewArrival: false,
-  // isFeatured: false,
   ratings: "",
-  // inventory: [
-  //   {
-  //     size: "",
-  //     quantity: 0,
-  //   },
-  // ],
 };
 
 const ProductEditForm = () => {
+  const [images, setImages] = useState([]);
   const { id } = useParams();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -51,8 +44,6 @@ const ProductEditForm = () => {
     const fetchProductData = async () => {
       try {
         const productData = await fetchProduct(id);
-        console.log("🚀 ~ fetchProductData ~ productData:", productData);
-
         //Handle categories
         setSelectedCategories(
           productData.categories.map((category) => ({
@@ -74,6 +65,9 @@ const ProductEditForm = () => {
             gender: inventory.gender,
           }))
         );
+
+        // set images
+        setImages(productData.images);
 
         setFields({
           name: productData.name,
@@ -310,6 +304,22 @@ const ProductEditForm = () => {
                   id="images"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
+                <div className="grid grid-cols-5 gap-4 py-6">
+                  {images.length > 0 &&
+                    images.map((image, index) => (
+                      <div key={index} className="avatar">
+                        <div className="w-24 ring ring-sky-950 rounded">
+                          <Image
+                            src={image || noimage}
+                            alt=""
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
 
               {/* Categories */}

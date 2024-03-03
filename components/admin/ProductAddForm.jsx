@@ -6,6 +6,7 @@ import InventoryInput from "./InventoryInput";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { CategoriesOptions } from "@/data/data";
+import ProductImageUpload from "./ProductImageUpload";
 const initialProductState = {
   name: "",
   description: "",
@@ -31,6 +32,7 @@ const initialProductState = {
 
 const ProductAddForm = () => {
   const [loading, setLoading] = useState(false);
+  const [imagesData, setImagesData] = useState(null);
   const router = useRouter();
   const [inventoryData, setInventoryData] = useState([]);
   const [newArrivalChecked, setNewArrivalChecked] = useState(false);
@@ -80,6 +82,7 @@ const ProductAddForm = () => {
       const isFeatured = featuredChecked;
       const ratings = fields.ratings;
       const inventory = inventoryData;
+      const images = imagesData;
 
       try {
         const res = await fetch(`/api/products/add`, {
@@ -99,6 +102,7 @@ const ProductAddForm = () => {
             isNewArrival,
             isFeatured,
             ratings,
+            images,
           }),
         });
 
@@ -248,20 +252,7 @@ const ProductAddForm = () => {
               </div>
 
               {/* // --------- Image -------- */}
-              <div className="mb-5">
-                <label
-                  htmlFor="images"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Product Images
-                </label>
-                <input
-                  type="file"
-                  name="images"
-                  id="images"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
+              <ProductImageUpload setImagesData={setImagesData} />
 
               {/* Categories */}
               <div className="mb-5">

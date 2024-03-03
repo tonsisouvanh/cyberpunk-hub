@@ -2,6 +2,15 @@ import connectDB from "@/config/database";
 import { Product } from "@/models/Product";
 import User from "@/models/User";
 import { getSessionUser } from "@/utils/getSessionUser";
+import { uploadMultipleImages } from "@/utils/imageUpload";
+
+const opts = {
+  overwrite: true,
+  invalidate: true,
+  resource_type: "auto",
+  folder: "/cyberpunkhub/test",
+  transformation: { quality: "50" },
+};
 
 //GET api/products
 export const GET = async (req) => {
@@ -55,7 +64,13 @@ export const POST = async (req, res) => {
       isNewArrival,
       isFeatured,
       ratings,
+      images,
     } = requestBody;
+    console.log("🚀 ~ POST ~ images:", images);
+
+    // Upload image to cloundinary
+    const imagesUrl = await uploadMultipleImages(images, opts);
+    console.log("🚀 ~ POST ~ imageUrl:", imagesUrl);
     const productData = {
       inventory,
       name,
@@ -71,6 +86,7 @@ export const POST = async (req, res) => {
       isNewArrival,
       isFeatured,
       ratings: parseFloat(ratings),
+      images: imagesUrl,
     };
     const newProduct = new Product(productData);
     await newProduct.save();
