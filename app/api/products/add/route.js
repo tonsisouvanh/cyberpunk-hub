@@ -1,5 +1,6 @@
 import connectDB from "@/config/database";
 import { Product } from "@/models/Product";
+import User from "@/models/User";
 import { getSessionUser } from "@/utils/getSessionUser";
 
 //GET api/products
@@ -29,6 +30,16 @@ export const POST = async (req, res) => {
     }
 
     const { userId } = sessionUser;
+
+    // Fetch the user document from MongoDB
+    const user = await User.findById(userId);
+
+    if (user.role !== "admin") {
+      return new Response(JSON.stringify({ message: "You are unauthorized" }), {
+        status: 401,
+      });
+    }
+
     // Parse the request body
     const requestBody = await req.json();
     // Access data from the request body

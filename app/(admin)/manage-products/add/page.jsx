@@ -1,4 +1,6 @@
+"use client";
 import ProductAddForm from "@/components/admin/ProductAddForm";
+import withAuth from "@/components/auth/withAuth";
 import React from "react";
 
 const AddProductPage = () => {
@@ -9,4 +11,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default withAuth(AddProductPage);

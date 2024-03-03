@@ -1,19 +1,20 @@
 import { noimage } from "@/assets/images";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import ProductRating from "../Rating";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
+import Link from "next/link";
 
 const ProductTable = ({ products, setProducts }) => {
-  const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const handleDeleteProduct = async (productId) => {
     const confirmed = window.confirm("Are you sure you want to delete");
 
     if (!confirmed) return;
 
-    setLoading(true);
+    setDeleteLoading(true);
     try {
       const res = await fetch(`/api/products/${productId}`, {
         method: "DELETE",
@@ -34,10 +35,13 @@ const ProductTable = ({ products, setProducts }) => {
       console.log(error);
       toast.error("Failed to delete");
     } finally {
-      setLoading(false);
+      setDeleteLoading(false);
     }
   };
-  if (loading) return <Spinner loading={loading} />;
+
+
+
+  if (deleteLoading) return <Spinner loading={deleteLoading} />;
   return (
     <div className="overflow-x-auto pb-8">
       <table className="min-w-full bg-white font-[sans-serif]">
@@ -77,7 +81,12 @@ const ProductTable = ({ products, setProducts }) => {
                     className="w-10 h-10 p-1.5 shrink-0 bg-gray-100"
                   />
                   <div className="ml-4">
-                    <p className="text-sm text-black">{product?.name}</p>
+                    <Link
+                      href={`/manage-products/${product._id}`}
+                      className="text-sm text-black hover:underline"
+                    >
+                      {product?.name}
+                    </Link>
                   </div>
                 </div>
               </td>
@@ -98,9 +107,12 @@ const ProductTable = ({ products, setProducts }) => {
                 <ProductRating value={product?.ratings} />
               </td>
               <td className="px-6 py-3">
-                <button className="btn btn-ghost btn-circle btn-sm">
+                <Link
+                  href={`/manage-products/${product._id}`}
+                  className="btn btn-ghost btn-circle btn-sm"
+                >
                   <FaPencilAlt className="text-sky-900" size={12} />
-                </button>
+                </Link>
                 <button
                   onClick={() => handleDeleteProduct(product?._id)}
                   className="btn btn-ghost btn-circle btn-sm"

@@ -4,45 +4,100 @@ import PageHeader from "./PageHeader";
 import Select from "react-select";
 import InventoryInput from "./InventoryInput";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { CategoriesOptions } from "@/data/data";
+import { fetchProduct } from "@/utils/request";
+import Spinner from "../Spinner";
 const initialProductState = {
   name: "",
   description: "",
-  importPrice: 0,
-  price: 0,
+  importPrice: "",
+  price: "",
   discount: {
-    value: 0,
+    value: "",
     discountType: "percentage",
   },
-  images: [],
+  // images: [],
   categories: [],
   brand: "",
-  isNewArrival: false,
-  isFeatured: false,
-  ratings: 0,
-  inventory: [
-    {
-      size: "",
-      quantity: 0,
-    },
-  ],
+  // isNewArrival: false,
+  // isFeatured: false,
+  ratings: "",
+  // inventory: [
+  //   {
+  //     size: "",
+  //     quantity: 0,
+  //   },
+  // ],
 };
 
-const ProductAddForm = () => {
-  const [loading, setLoading] = useState(false);
+const ProductEditForm = () => {
+  const { id } = useParams();
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  const [editLoading, setEditLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [inventoryData, setInventoryData] = useState([]);
   const [newArrivalChecked, setNewArrivalChecked] = useState(false);
   const [featuredChecked, setFeaturedChecked] = useState(false);
 
-  const [mounted, setMounted] = useState(false);
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [fields, setFields] = useState(initialProductState);
+  useEffect(() => {
+    setMounted(true);
+
+    // Fetch product data for form
+    const fetchProductData = async () => {
+      try {
+        const productData = await fetchProduct(id);
+        console.log("🚀 ~ fetchProductData ~ productData:", productData);
+
+        //Handle categories
+        setSelectedCategories(
+          productData.categories.map((category) => ({
+            value: category.toLowerCase(),
+            label: category,
+          }))
+        );
+
+        //Handle isNewArrival and isFeatured
+        setNewArrivalChecked(productData.isNewArrival);
+        setFeaturedChecked(productData.isFeatured);
+
+        //Handle Inventory data
+        setInventoryData(
+          productData.inventory.map((inventory) => ({
+            id: inventory.id,
+            size: inventory.size,
+            quantity: inventory.quantity,
+            gender: inventory.gender,
+          }))
+        );
+
+        setFields({
+          name: productData.name,
+          description: productData.description,
+          importPrice: productData.importPrice,
+          price: productData.price,
+          discount: productData.discount,
+          categories: productData.categories,
+          brand: productData.brand,
+          ratings: productData.ratings,
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setEditLoading(false);
+        setLoading(false);
+      }
+    };
+
+    fetchProductData();
+  }, [id]);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Check if nested property
+    // Check if nested product
     if (name.includes(".")) {
       const [outerKey, innerKey] = name.split(".");
       setFields((prevFields) => ({
@@ -60,30 +115,28 @@ const ProductAddForm = () => {
     }
   };
 
-  useEffect(() => setMounted(true), []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    const addProduct = async () => {
-      const name = fields.name;
-      const description = fields.description;
-      const importPrice = fields.importPrice;
-      const price = fields.price;
+    setEditLoading(true);
+    const editProduct = async () => {
+      const name = fields?.name;
+      const description = fields?.description;
+      const importPrice = fields?.importPrice;
+      const price = fields?.price;
       const discount = {
         value: fields?.discount?.value,
         discountType: fields?.discount?.discountType,
       };
       const categories = [...selectedCategories.map((i) => i.value)];
-      const brand = fields.brand;
+      const brand = fields?.brand;
       const isNewArrival = newArrivalChecked;
       const isFeatured = featuredChecked;
-      const ratings = fields.ratings;
+      const ratings = fields?.ratings;
       const inventory = inventoryData;
 
       try {
-        const res = await fetch(`/api/products/add`, {
-          method: "POST",
+        const res = await fetch(`/api/products/${id}`, {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -111,11 +164,13 @@ const ProductAddForm = () => {
         console.log(error);
         toast.error("Something went wrong");
       } finally {
-        setLoading(false);
+        setEditLoading(false);
       }
     };
-    addProduct();
+    editProduct();
   };
+
+  if (loading) return <Spinner loading={loading} />;
   return (
     <>
       {mounted && (
@@ -139,7 +194,7 @@ const ProductAddForm = () => {
                   id="name"
                   placeholder="Full Name"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  value={fields.name}
+                  value={fields?.name}
                   required
                   onChange={handleChange}
                 />
@@ -156,7 +211,7 @@ const ProductAddForm = () => {
                   id="description"
                   placeholder="Enter product description"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  value={fields.description}
+                  value={fields?.description}
                   onChange={handleChange}
                 />
               </div>
@@ -177,7 +232,7 @@ const ProductAddForm = () => {
                       id="importPrice"
                       placeholder="Enter import price"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      value={fields.importPrice}
+                      value={fields?.importPrice}
                       onChange={handleChange}
                     />
                   </div>
@@ -196,7 +251,7 @@ const ProductAddForm = () => {
                       id="price"
                       placeholder="Enter price"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      value={fields.price}
+                      value={fields?.price}
                       onChange={handleChange}
                     />
                   </div>
@@ -207,10 +262,7 @@ const ProductAddForm = () => {
               <div className="-mx-3 flex flex-wrap">
                 <div className="w-full px-3 sm:w-1/2">
                   <div className="mb-5">
-                    <label
-                      htmlFor="discountType"
-                      className="mb-3 block text-base font-medium text-[#07074D]"
-                    >
+                    <label className="mb-3 block text-base font-medium text-[#07074D]">
                       Discount Type
                     </label>
                     <select
@@ -227,10 +279,7 @@ const ProductAddForm = () => {
                 </div>
                 <div className="w-full px-3 sm:w-1/2">
                   <div className="mb-5">
-                    <label
-                      htmlFor="discountValue"
-                      className="mb-3 block text-base font-medium text-[#07074D]"
-                    >
+                    <label className="mb-3 block text-base font-medium text-[#07074D]">
                       Discount Value
                     </label>
                     <input
@@ -241,7 +290,7 @@ const ProductAddForm = () => {
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       value={fields?.discount?.value}
                       onChange={handleChange}
-                      disabled={fields.discount.discountType === "" && true}
+                      disabled={fields?.discount?.discountType === "" && true}
                     />
                   </div>
                 </div>
@@ -273,7 +322,7 @@ const ProductAddForm = () => {
                 </label>
                 <Select
                   isMulti
-                  defaultValue={selectedCategories}
+                  value={selectedCategories}
                   onChange={setSelectedCategories}
                   options={CategoriesOptions}
                   isSearchable
@@ -296,7 +345,7 @@ const ProductAddForm = () => {
                   id="brand"
                   placeholder="Enter brand"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  value={fields.brand}
+                  value={fields?.brand}
                   onChange={handleChange}
                 />
               </div>
@@ -352,7 +401,7 @@ const ProductAddForm = () => {
                     id="ratings"
                     placeholder="Enter ratings"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    value={fields.ratings}
+                    value={fields?.ratings}
                     onChange={handleChange}
                   />
                 </div>
@@ -368,13 +417,13 @@ const ProductAddForm = () => {
                   type="submit"
                   className="btn btn-neutral bg-sky-950 btn-block text-white"
                 >
-                  {loading ? (
+                  {editLoading ? (
                     <>
-                      <span className="loading loading-spinner"></span>
-                      loading
+                      <span className="editLoading editLoading-spinner"></span>
+                      Loading
                     </>
                   ) : (
-                    "Add Product"
+                    "Edit Product"
                   )}
                 </button>
               </div>
@@ -386,4 +435,4 @@ const ProductAddForm = () => {
   );
 };
 
-export default ProductAddForm;
+export default ProductEditForm;

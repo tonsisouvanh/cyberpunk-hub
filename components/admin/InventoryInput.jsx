@@ -113,6 +113,7 @@ const InventoryInput = ({ inventoryData, setInventoryData }) => {
               className="flex relative bg-white flex-col hover:shadow border text-center w-full p-4 rounded-md"
             >
               <button
+                type="button"
                 onClick={() => handleDelete(item.id)}
                 className="btn btn-ghost btn-xs btn-circle"
               >

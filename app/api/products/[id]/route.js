@@ -1,8 +1,8 @@
 import connectDB from "@/config/database";
-import {Product} from "@/models/Product";
+import { Product } from "@/models/Product";
+import User from "@/models/User";
 import { getSessionUser } from "@/utils/getSessionUser";
 // import { getSessionUser } from "@/utils/getSessionUser";
-
 
 // GET api/properties/:id
 export const GET = async (req, { params }) => {
@@ -21,12 +21,12 @@ export const GET = async (req, { params }) => {
   }
 };
 
-// DELETE api/properties/:id
+// DELETE api/products/:id
 export const DELETE = async (req, { params }) => {
   try {
     const productId = params.id;
     const sessionUser = await getSessionUser();
-    console.log("🚀 ~ DELETE ~ sessionUser:", sessionUser)
+    console.log("🚀 ~ DELETE ~ sessionUser:", sessionUser);
     if (!sessionUser || !sessionUser.userId) {
       return new Response("User ID is required", { status: 401 });
     }
@@ -54,7 +54,7 @@ export const DELETE = async (req, { params }) => {
   }
 };
 
-// PUT /api/properties/:id
+// PUT /api/products/:id
 export const PUT = async (req, { params }) => {
   try {
     await connectDB();
@@ -65,47 +65,52 @@ export const PUT = async (req, { params }) => {
     }
 
     const { id } = params;
+    console.log("🚀 ~ PUT ~ id:", id);
     const { userId } = sessionUser;
-    const formData = await req.formData();
-    // Access all value from amenities
-    const amenities = formData.getAll("amenities");
-    // Get product to update
-    const existingProduct = await Product.findById(id);
-    if (!existingProduct) {
-      return new Response("Product Not Exists", { status: 404 });
+    // Fetch the user document from MongoDB
+    const user = await User.findById(userId);
+    // Authorize
+    if (user.role !== "admin") {
+      return new Response(JSON.stringify({ message: "You are unauthorized" }), {
+        status: 401,
+      });
     }
 
-    // Verify ownership
-    if (existingProduct.owner.toString() !== userId) {
-      return new Response("Unauthorize", { status: 401 });
-    }
-    // Create product data object for db
+    // Parse the request body
+    const requestBody = await req.json();
+    
+    // Access data from the request body
+    const {
+      inventory,
+      name,
+      description,
+      importPrice,
+      price,
+      discount,
+      categories,
+      brand,
+      isNewArrival,
+      isFeatured,
+      ratings,
+    } = requestBody;
     const productData = {
-      type: formData.get("type"),
-      name: formData.get("name"),
-      description: formData.get("description"),
-      location: {
-        street: formData.get("location.street"),
-        city: formData.get("location.city"),
-        state: formData.get("location.state"),
-        zipcode: formData.get("location.zipcode"),
+      inventory,
+      name,
+      description,
+      importPrice: parseInt(importPrice),
+      price: parseInt(price),
+      discount: {
+        value: parseFloat(discount.value),
+        discountType: discount.discountType,
       },
-      beds: formData.get("beds"),
-      baths: formData.get("baths"),
-      square_feet: formData.get("square_feet"),
-      amenities,
-      rates: {
-        weekly: formData.get("rates.weekly"),
-        monthly: formData.get("rates.monthly"),
-        nightly: formData.get("rates.nightly"),
-      },
-      seller_info: {
-        name: formData.get("seller_info.name"),
-        email: formData.get("seller_info.email"),
-        phone: formData.get("seller_info.phone"),
-      },
-      owner: userId,
+      categories,
+      brand,
+      isNewArrival,
+      isFeatured,
+      ratings: parseFloat(ratings),
     };
+    console.log("🚀 ~ PUT ~ productData:", productData);
+
     // Update product in database
     const updatedProduct = await Product.findByIdAndUpdate(id, productData);
     return new Response(JSON.stringify(updatedProduct, { status: 200 }));

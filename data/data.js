@@ -22,4 +22,17 @@ export const menuItems = [
   { id: 5, text: "ຕິດຕໍ່", toPath: "/404" },
 ];
 
+export const CategoriesOptions = [
+  { value: "clothing", label: "Clothing" },
+  { value: "shoes", label: "Shoes" },
+  { value: "accessories", label: "Accessories" },
+  { value: "bags", label: "Bags" },
+  { value: "jewelry", label: "Jewelry" },
+  { value: "watches", label: "Watches" },
+  { value: "eyewear", label: "Eyewear" },
+  { value: "lingerie", label: "Lingerie" },
+  { value: "activewear", label: "Activewear" },
+  { value: "outerwear", label: "Outerwear" },
+];
+
 export const themes = ["winter", "black", "night"];

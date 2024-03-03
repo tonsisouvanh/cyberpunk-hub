@@ -18,7 +18,6 @@ async function fetchProducts() {
 
 //fetch single property
 async function fetchProduct(id) {
-  console.log("🚀 ~ fetchProduct ~ id:", id)
   try {
     // Handle the case where the domain is not available yet
     if (!apiDomain) {
