@@ -2,7 +2,8 @@ import connectDB from "@/config/database";
 import { Product } from "@/models/Product";
 import User from "@/models/User";
 import { getSessionUser } from "@/utils/getSessionUser";
-import { uploadMultipleImages } from "@/utils/imageUpload";
+import { deleteImage, uploadMultipleImages } from "@/utils/imageUpload";
+import { extractImageId } from "@/utils/utils";
 // import { getSessionUser } from "@/utils/getSessionUser";
 
 const opts = {
@@ -43,13 +44,24 @@ export const DELETE = async (req, { params }) => {
 
     await connectDB();
 
+    // Fetch the user document from MongoDB
+    const user = await User.findById(userId);
+    // Authorize
+    if (user.role !== "admin") {
+      return new Response(JSON.stringify({ message: "You are unauthorized" }), {
+        status: 401,
+      });
+    }
+
     const product = await Product.findById(productId);
     if (!product) return new Response("Product Not Found", { status: 404 });
 
-    // Verify ownership
-    // if (product.owner.toString() !== userId) {
-    //   return new Response("Unauthorized", { status: 401 });
-    // }
+    if (product.images && product.images.length > 0) {
+      for (const imageUrl of product.images) {
+        const publicId = extractImageId(imageUrl);
+        await deleteImage(publicId);
+      }
+    }
 
     await product.deleteOne();
 
@@ -101,7 +113,15 @@ export const PUT = async (req, { params }) => {
       ratings,
       images,
       imageList,
+      selectedDeleteImages,
     } = requestBody;
+    // Check if there are any images to delete
+    if (selectedDeleteImages && selectedDeleteImages.length > 0) {
+      for (const publicId of selectedDeleteImages) {
+        await deleteImage(publicId);
+      }
+    }
+
     // Upload image to cloundinary
     let imagesUrl = [];
     let addedImages = [];
@@ -129,6 +149,11 @@ export const PUT = async (req, { params }) => {
     };
     // Update product in database
     const updatedProduct = await Product.findByIdAndUpdate(id, productData);
+    if (!updatedProduct) {
+      return new Response(JSON.stringify({ message: "Product not found" }), {
+        status: 404,
+      });
+    }
     return new Response(JSON.stringify(updatedProduct, { status: 200 }));
   } catch (error) {
     return new Response("Fail to add product", { status: 500 });

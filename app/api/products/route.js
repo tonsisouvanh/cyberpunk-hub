@@ -1,6 +1,5 @@
 import connectDB from "@/config/database";
 import { Product } from "@/models/Product";
-import { getSessionUser } from "@/utils/getSessionUser";
 
 //GET api/products
 export const GET = async (req) => {
@@ -17,4 +16,3 @@ export const GET = async (req) => {
     return new Response("Something wrong", { status: 500 });
   }
 };
-

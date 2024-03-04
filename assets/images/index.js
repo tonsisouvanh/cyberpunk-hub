@@ -6,6 +6,7 @@ import noimage from "./noimage.jpg";
 import adbanner from "./adbanner.png";
 import coat from "./coat.jpg";
 import jean from "./jean.jpg";
+import emptybox from "./empty-box.png";
 export {
   cyberpunk,
   jimabanner,
@@ -15,4 +16,5 @@ export {
   adbanner,
   coat,
   jean,
+  emptybox,
 };

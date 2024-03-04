@@ -11,8 +11,7 @@ import Spinner from "../Spinner";
 import Image from "next/image";
 import { noimage } from "@/assets/images";
 import ProductImageUpload from "./ProductImageUpload";
-
-import { deleteImage } from "@/utils/imageUpload";
+import { extractImageId } from "@/utils/utils";
 const initialProductState = {
   name: "",
   description: "",
@@ -27,6 +26,7 @@ const initialProductState = {
 };
 
 const ProductEditForm = () => {
+  const [selectedDeleteImages, setSelectedDeleteImages] = useState([]);
   const [imageList, setImageList] = useState([]);
   const [imagesData, setImagesData] = useState(null);
   const { id } = useParams();
@@ -152,12 +152,12 @@ const ProductEditForm = () => {
             ratings,
             images: ImagesInput,
             imageList,
+            selectedDeleteImages,
           }),
         });
 
         if (res.status === 200) {
           const data = await res.json();
-          console.log("first");
           toast.success(data.message);
           router.push("/manage-products");
         }
@@ -170,28 +170,13 @@ const ProductEditForm = () => {
     };
     editProduct();
   };
+
   const handleDeleteImage = (url) => {
     setImageList((prevImages) => prevImages.filter((image) => image !== url));
-    // const deleteImageFromCloudinary = () => {
-    //   const imageId = extractImageId(url);
-    //   console.log("🚀 ~ deleteImageFromCloudinary ~ imageId:", imageId);
-    //   // await deleteImage(imageId)
-    // };
-    // deleteImageFromCloudinary();
-
-    const deleteImage = async (imageId, opts) => {
-      // image => base64
-      return new Promise((resolve, reject) => {
-        cloudinary.uploader.destroy(imageId, (error, result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject({ message: error.message });
-          }
-        });
-      });
-    };
+    const imageId = extractImageId(url);
+    setSelectedDeleteImages((prevImages) => [...prevImages, imageId]);
   };
+
   if (loading) return <Spinner loading={loading} />;
   return (
     <>
@@ -200,7 +185,7 @@ const ProductEditForm = () => {
           {/* Author: FormBold Team */}
           <div className="mx-auto w-full lg:max-w-4xl bg-transparent rounded-lg p-4d lg:p-20d">
             <div className="m-w-full flex justify-center">
-              <PageHeader headerText="Add Product" />
+              <PageHeader headerText="Edit Product" />
             </div>
             <form onSubmit={handleSubmit}>
               <div className="mb-5">
@@ -450,6 +435,7 @@ const ProductEditForm = () => {
               {/* Submit button */}
               <div>
                 <button
+                  disabled={editLoading ? true : false}
                   type="submit"
                   className="btn btn-neutral bg-sky-950 btn-block text-white"
                 >

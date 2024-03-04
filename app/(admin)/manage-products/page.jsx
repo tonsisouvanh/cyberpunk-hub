@@ -1,4 +1,5 @@
 "use client";
+import Empty from "@/components/Empty";
 import Spinner from "@/components/Spinner";
 import PageHeader from "@/components/admin/PageHeader";
 import ProductTable from "@/components/admin/ProductTable";
@@ -82,7 +83,16 @@ const ManageProductsPage = () => {
       {loading ? (
         <Spinner loading={loading} />
       ) : (
-        <ProductTable products={filteredProducts} setProducts={setProducts} />
+        <>
+          {products.length > 0 ? (
+            <ProductTable
+              products={filteredProducts}
+              setProducts={setProducts}
+            />
+          ) : (
+            <Empty />
+          )}
+        </>
       )}
     </>
   );

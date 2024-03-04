@@ -8,6 +8,7 @@ import Image from "next/image";
 import { fadeFromTopAnimate } from "@/utils/animation";
 import { noimage } from "@/assets/images";
 import ProductRating from "./Rating";
+import Empty from "./Empty";
 
 const FeaturedProducts = ({
   products,
@@ -15,15 +16,6 @@ const FeaturedProducts = ({
   featuredDesc = "No description",
   featuredType,
 }) => {
-  // const getRandomElements = (array, numberOfElements) => {
-  //   // Clone the array to avoid modifying the original
-  //   const shuffledArray = [...array].sort(() => Math.random() - 0.5);
-
-  //   // Take the first `numberOfElements` elements
-  //   const randomElements = shuffledArray.slice(0, numberOfElements);
-  //   return randomElements;
-  // };
-
   const getFeaturedType = () => {
     if (featuredType === "newarrival") {
       return "/products/filter-results?isNewArrival=true";
@@ -96,7 +88,7 @@ const FeaturedProducts = ({
                           <span className="absolute" aria-hidden="true" />
                         </Link>
                       </h3>
-                      <ProductRating />
+                      <ProductRating value={product.ratings} />
                     </div>
                     <div className="text-right">
                       <del className="mt-px text-xs font-semibold text-gray-600 sm:text-sm">
@@ -111,9 +103,9 @@ const FeaturedProducts = ({
               ))}
             </div>
           ) : (
-            <p className="text-center container mx-auto max-w-full mt-4">
-              No Products
-            </p>
+            <div className="my-5">
+              <Empty />
+            </div>
           )}
           <div className="mx-auto mt-2 max-w-fit container">
             <Link

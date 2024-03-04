@@ -1,6 +1,6 @@
 import { noimage } from "@/assets/images";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import ProductRating from "../Rating";
 import { toast } from "react-toastify";
