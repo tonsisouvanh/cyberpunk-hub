@@ -8,7 +8,7 @@ const opts = {
   overwrite: true,
   invalidate: true,
   resource_type: "auto",
-  folder: "/cyberpunkhub/test",
+  folder: "/cyberpunkhub/products",
   transformation: { quality: "50" },
 };
 
@@ -66,11 +66,8 @@ export const POST = async (req, res) => {
       ratings,
       images,
     } = requestBody;
-    console.log("🚀 ~ POST ~ images:", images);
-
     // Upload image to cloundinary
     const imagesUrl = await uploadMultipleImages(images, opts);
-    console.log("🚀 ~ POST ~ imageUrl:", imagesUrl);
     const productData = {
       inventory,
       name,
@@ -98,3 +95,7 @@ export const POST = async (req, res) => {
     return new Response("Fail to add property", { status: 500 });
   }
 };
+
+
+
+// POST /products/delete

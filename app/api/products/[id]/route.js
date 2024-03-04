@@ -2,7 +2,16 @@ import connectDB from "@/config/database";
 import { Product } from "@/models/Product";
 import User from "@/models/User";
 import { getSessionUser } from "@/utils/getSessionUser";
+import { uploadMultipleImages } from "@/utils/imageUpload";
 // import { getSessionUser } from "@/utils/getSessionUser";
+
+const opts = {
+  overwrite: true,
+  invalidate: true,
+  resource_type: "auto",
+  folder: "/cyberpunkhub/products",
+  transformation: { quality: "50" },
+};
 
 // GET api/properties/:id
 export const GET = async (req, { params }) => {
@@ -26,7 +35,6 @@ export const DELETE = async (req, { params }) => {
   try {
     const productId = params.id;
     const sessionUser = await getSessionUser();
-    console.log("🚀 ~ DELETE ~ sessionUser:", sessionUser);
     if (!sessionUser || !sessionUser.userId) {
       return new Response("User ID is required", { status: 401 });
     }
@@ -65,7 +73,6 @@ export const PUT = async (req, { params }) => {
     }
 
     const { id } = params;
-    console.log("🚀 ~ PUT ~ id:", id);
     const { userId } = sessionUser;
     // Fetch the user document from MongoDB
     const user = await User.findById(userId);
@@ -78,7 +85,7 @@ export const PUT = async (req, { params }) => {
 
     // Parse the request body
     const requestBody = await req.json();
-    
+
     // Access data from the request body
     const {
       inventory,
@@ -92,7 +99,17 @@ export const PUT = async (req, { params }) => {
       isNewArrival,
       isFeatured,
       ratings,
+      images,
+      imageList,
     } = requestBody;
+    // Upload image to cloundinary
+    let imagesUrl = [];
+    let addedImages = [];
+    if (images) {
+      imagesUrl = await uploadMultipleImages(images, opts);
+      addedImages = [...imageList, ...imagesUrl];
+    } else addedImages = [...imageList];
+
     const productData = {
       inventory,
       name,
@@ -108,9 +125,8 @@ export const PUT = async (req, { params }) => {
       isNewArrival,
       isFeatured,
       ratings: parseFloat(ratings),
+      images: addedImages,
     };
-    console.log("🚀 ~ PUT ~ productData:", productData);
-
     // Update product in database
     const updatedProduct = await Product.findByIdAndUpdate(id, productData);
     return new Response(JSON.stringify(updatedProduct, { status: 200 }));

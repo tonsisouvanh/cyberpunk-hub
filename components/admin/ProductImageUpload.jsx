@@ -1,5 +1,5 @@
 import Promise from "promise";
-const ProductImageUpload = ({ setImagesData }) => {
+const ProductImageUpload = ({ setImagesData, isRequired = true }) => {
   const convertBase64 = async (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -19,7 +19,7 @@ const ProductImageUpload = ({ setImagesData }) => {
     if (files && files.length === 1) {
       const base64 = await convertBase64(files[0]);
       //   setBase64(base64);
-      setImagesData(base64);
+      setImagesData([base64]);
       return;
     }
 
@@ -48,7 +48,7 @@ const ProductImageUpload = ({ setImagesData }) => {
         accept="image/*"
         multiple
         onChange={handleImageChange}
-        required
+        required={isRequired ? true : false}
       />
     </div>
   );

@@ -10,6 +10,9 @@ import { fetchProduct } from "@/utils/request";
 import Spinner from "../Spinner";
 import Image from "next/image";
 import { noimage } from "@/assets/images";
+import ProductImageUpload from "./ProductImageUpload";
+
+import { deleteImage } from "@/utils/imageUpload";
 const initialProductState = {
   name: "",
   description: "",
@@ -24,7 +27,8 @@ const initialProductState = {
 };
 
 const ProductEditForm = () => {
-  const [images, setImages] = useState([]);
+  const [imageList, setImageList] = useState([]);
+  const [imagesData, setImagesData] = useState(null);
   const { id } = useParams();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -67,7 +71,7 @@ const ProductEditForm = () => {
         );
 
         // set images
-        setImages(productData.images);
+        setImageList(productData.images);
 
         setFields({
           name: productData.name,
@@ -127,7 +131,7 @@ const ProductEditForm = () => {
       const isFeatured = featuredChecked;
       const ratings = fields?.ratings;
       const inventory = inventoryData;
-
+      const ImagesInput = imagesData;
       try {
         const res = await fetch(`/api/products/${id}`, {
           method: "PUT",
@@ -146,11 +150,14 @@ const ProductEditForm = () => {
             isNewArrival,
             isFeatured,
             ratings,
+            images: ImagesInput,
+            imageList,
           }),
         });
 
         if (res.status === 200) {
           const data = await res.json();
+          console.log("first");
           toast.success(data.message);
           router.push("/manage-products");
         }
@@ -163,7 +170,28 @@ const ProductEditForm = () => {
     };
     editProduct();
   };
+  const handleDeleteImage = (url) => {
+    setImageList((prevImages) => prevImages.filter((image) => image !== url));
+    // const deleteImageFromCloudinary = () => {
+    //   const imageId = extractImageId(url);
+    //   console.log("🚀 ~ deleteImageFromCloudinary ~ imageId:", imageId);
+    //   // await deleteImage(imageId)
+    // };
+    // deleteImageFromCloudinary();
 
+    const deleteImage = async (imageId, opts) => {
+      // image => base64
+      return new Promise((resolve, reject) => {
+        cloudinary.uploader.destroy(imageId, (error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject({ message: error.message });
+          }
+        });
+      });
+    };
+  };
   if (loading) return <Spinner loading={loading} />;
   return (
     <>
@@ -292,23 +320,21 @@ const ProductEditForm = () => {
 
               {/* // --------- Image -------- */}
               <div className="mb-5">
-                <label
-                  htmlFor="images"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  Product Images
-                </label>
-                <input
-                  type="file"
-                  name="images"
-                  id="images"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                <ProductImageUpload
+                  setImagesData={setImagesData}
+                  isRequired={false}
                 />
                 <div className="grid grid-cols-5 gap-4 py-6">
-                  {images.length > 0 &&
-                    images.map((image, index) => (
+                  {imageList.length > 0 &&
+                    imageList.map((image, index) => (
                       <div key={index} className="avatar">
                         <div className="w-24 ring ring-sky-950 rounded">
+                          <span
+                            onClick={() => handleDeleteImage(image)}
+                            className="btn btn-error btn-xs btn-circle absolute top-1 left-1"
+                          >
+                            x
+                          </span>
                           <Image
                             src={image || noimage}
                             alt=""
@@ -429,7 +455,7 @@ const ProductEditForm = () => {
                 >
                   {editLoading ? (
                     <>
-                      <span className="editLoading editLoading-spinner"></span>
+                      <span className="loading loading-spinner"></span>
                       Loading
                     </>
                   ) : (
