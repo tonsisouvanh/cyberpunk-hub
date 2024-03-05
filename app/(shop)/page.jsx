@@ -7,12 +7,14 @@ import SearchBar from "@/components/ProductSearchForm";
 const HomePage = () => {
   return (
     <>
-      <div className="space-y-14 md:space-y-44 pb-14 md:pb-44">
+      <div className="pb-14 md:pb-44">
         <Hero />
-        <SearchBar />
-        <HomeCategories />
-        <HomeServices />
-        <HomeFeaturedProducts />
+        <div className="space-y-14 md:space-y-44">
+          <SearchBar />
+          <HomeCategories />
+          <HomeServices />
+          <HomeFeaturedProducts />
+        </div>
       </div>
     </>
   );

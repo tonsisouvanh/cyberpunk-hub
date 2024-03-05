@@ -19,7 +19,7 @@ import { noimage } from "@/assets/images";
 
 const menuItems = [
   { text: "ໜ້າຫຼັກ", toPath: "/" },
-  { text: "Shop now!", toPath: "/products" },
+  { text: "ເຄື່ອງທັງໝົດ", toPath: "/products" },
   // { id: 2, text: "Sale", toPath: "/products" },
   // { id: 3, text: "ເຄື່ອງມາໃໝ່", toPath: "/all-products/arrival" },
   { text: "ກ່ຽວກັບພໍ່ຄ້າ", toPath: "/about" },
@@ -52,8 +52,9 @@ const Navbar = () => {
 
   return (
     <>
+      {/* TODO: navbar overflow */}
       {/* Desktop nav */}
-      <nav className="bg-white">
+      <nav className="bg-white overflow-hidden">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             <BurgerMenuIcon isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -86,7 +87,7 @@ const Navbar = () => {
             </ul>
             {/* User profile */}
             {session && (
-              <div className="flex items-center justify-center gap-2">
+              <div className="items-center hidden md:flex justify-center gap-2">
                 <div className="dropdown">
                   <div
                     tabIndex={0}

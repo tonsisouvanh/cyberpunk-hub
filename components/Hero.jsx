@@ -1,6 +1,5 @@
 "use client";
 
-import { fadeFromTopAnimate } from "@/utils/animation";
 import Link from "next/link";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -35,7 +34,7 @@ const Hero = () => {
         {slides.map((i, index) => {
           return (
             <SwiperSlide key={index} className="h-[25rem] w-full lg:h-[50rem]">
-              <div className="relative h-full w-full">
+              {/* <div className="relative h-full w-full">
                 <Image
                   src={i.image}
                   alt=""
@@ -64,6 +63,33 @@ const Hero = () => {
                     <span className="text !text-white">Shop now!</span>
                     <span className="bottom-key-1"></span>
                     <span className="bottom-key-2"></span>
+                  </Link>
+                </div>
+              </div> */}
+              <div className="relative bg-gradient-to-r from-neutral-900 to-neutral-800  lg:h-[30rem] py-16 font-[sans-serif]">
+                <div className="absolute inset-0">
+                  <Image
+                    src={i.image}
+                    alt=""
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-full h-full object-cover opacity-50"
+                  />
+                </div>
+                <div className="relative max-w-screen-xl mx-auto px-8 z-10 text-center text-white">
+                  <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                    Welcome To Cyberpunk Fashion
+                  </h1>
+                  <p className="text-lg md:text-xl mb-8">
+                    Experience excellence like never before with our exclusive
+                    products and services.
+                  </p>
+                  <Link
+                    href="/products"
+                    className="bg-sky-600 hover:bg-sky-700 text-white text-base font-semibold px-8 py-2.5 rounded-full transition duration-300 ease-in-out shadow-lg hover:shadow-xl"
+                  >
+                    Shop Now!
                   </Link>
                 </div>
               </div>

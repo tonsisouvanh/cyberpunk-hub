@@ -18,7 +18,6 @@ const ProductCard = ({ product }) => {
           sizes="100vw"
           className="object-cover"
         />
-        {/* TODO: re check if this count display correctly */}
         {product?.discount.value > 0 ? (
           <>
             {product?.discount?.discountType === "percentage" ? (
@@ -49,7 +48,7 @@ const ProductCard = ({ product }) => {
                 product?.discount
               ).toLocaleString()}
             </span>
-            {product?.discount ? (
+            {product?.discount?.value > 0 ? (
               <span className="text-sm text-slate-900 line-through">
                 {product?.price.toLocaleString()}
               </span>

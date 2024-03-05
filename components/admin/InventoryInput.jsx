@@ -105,12 +105,20 @@ const InventoryInput = ({ inventoryData, setInventoryData }) => {
             </select>
           </div>
         </div>
-
-        <div className="container mb-5 mx-auto grid px-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-6 gap-8">
+        <div className="w-full flex justify-center">
+          <button
+            type="button"
+            onClick={handleAddInventory}
+            className="btn btn-ghost btn-outline btn-wide"
+          >
+            Add Size
+          </button>
+        </div>
+        <div className="container flex flex-wrap justify-center mb-5 mx-auto gridd px-3 sm:grid-cols-1d md:grid-cols-2d lg:grid-cols-3d xl:grid-cols-4d pt-6 gap-8">
           {inventoryData.map((item, index) => (
             <div
               key={index}
-              className="flex relative bg-white flex-col hover:shadow border text-center w-full p-4 rounded-md"
+              className="flex relative bg-white flex-col hover:shadow border text-center w-[8rem] p-4 rounded-md"
             >
               <button
                 type="button"
@@ -130,15 +138,6 @@ const InventoryInput = ({ inventoryData, setInventoryData }) => {
               </p>
             </div>
           ))}
-        </div>
-        <div className="w-full flex justify-center">
-          <button
-            type="button"
-            onClick={handleAddInventory}
-            className="btn btn-ghost btn-outline btn-wide"
-          >
-            Add Size
-          </button>
         </div>
       </div>
     </>

@@ -28,6 +28,7 @@ const FeaturedProducts = ({
 
   const getFilteredData = () => {
     let filteredProducts = [];
+
     if (featuredType === "newarrival") {
       filteredProducts = products.filter(
         (product) => product.isNewArrival === true
@@ -38,7 +39,8 @@ const FeaturedProducts = ({
       );
     }
 
-    return filteredProducts;
+    const limitedProducts = filteredProducts.slice(0, 8);
+    return limitedProducts;
   };
 
   const filteredProducts = getFilteredData();
@@ -110,7 +112,7 @@ const FeaturedProducts = ({
           <div className="mx-auto mt-2 max-w-fit container">
             <Link
               href={getFeaturedType()}
-              className="btn text-white hover:bg-sky-800 bg-sky-950 btn-sm"
+              className="btn text-white hover:bg-sky-800 bg-sky-950"
             >
               View All
             </Link>

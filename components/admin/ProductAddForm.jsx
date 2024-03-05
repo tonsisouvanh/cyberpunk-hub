@@ -164,6 +164,8 @@ const ProductAddForm = () => {
                   onChange={handleChange}
                 />
               </div>
+              {/* // --------- Image -------- */}
+              <ProductImageUpload setImagesData={setImagesData} />
 
               {/* // --------- price -------- */}
               <div className="-mx-3 flex flex-wrap">
@@ -250,9 +252,6 @@ const ProductAddForm = () => {
                   </div>
                 </div>
               </div>
-
-              {/* // --------- Image -------- */}
-              <ProductImageUpload setImagesData={setImagesData} />
 
               {/* Categories */}
               <div className="mb-5">
@@ -356,6 +355,7 @@ const ProductAddForm = () => {
               {/* Submit button */}
               <div>
                 <button
+                  disabled={loading ? true : false}
                   type="submit"
                   className="btn btn-neutral bg-sky-950 btn-block text-white"
                 >
