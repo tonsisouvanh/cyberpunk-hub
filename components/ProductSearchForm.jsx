@@ -82,7 +82,7 @@ const ProductSearchForm = () => {
     //     </div>
     //   </div>
     // </section>
-    <section className="relative z-10 overflow-hidden bg-neutral-900 py-16 px-8">
+    <section className="relative z-[1] overflow-hidden bg-neutral-900 py-16 px-8">
       <div className="container flex justify-center">
         {/* <div className="-mx-4 flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">

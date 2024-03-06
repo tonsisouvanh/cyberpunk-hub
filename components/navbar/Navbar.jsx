@@ -35,8 +35,6 @@ const Navbar = () => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
@@ -54,7 +52,7 @@ const Navbar = () => {
     <>
       {/* TODO: navbar overflow */}
       {/* Desktop nav */}
-      <nav className="bg-white overflow-hidden">
+      <nav className="bg-white sticky top-0 z-50">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             <BurgerMenuIcon isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -185,7 +183,7 @@ const Navbar = () => {
       </nav>
       {/* Mobile nav */}
       <nav
-        className={`z-[5] origin-top scale-y-0 space-y-5 overflow-y-scroll px-5 py-3 transition duration-300 ${
+        className={`z-[10] origin-top scale-y-0 space-y-5 overflow-y-scroll px-5 py-3 transition duration-300 ${
           isOpen ? "scale-y-100" : ""
         } fixed left-0 top-0 h-screen w-screen border-b-[1px] bg-white text-center lg:hidden`}
       >

@@ -9,13 +9,17 @@ import { fadeFromTopAnimate } from "@/utils/animation";
 import { noimage } from "@/assets/images";
 import ProductRating from "./Rating";
 import Empty from "./Empty";
+import { useEffect, useState } from "react";
+import Spinner from "./Spinner";
 
 const FeaturedProducts = ({
-  products,
   featuredTitle = "No title",
   featuredDesc = "No description",
   featuredType,
 }) => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const getFeaturedType = () => {
     if (featuredType === "newarrival") {
       return "/products/filter-results?isNewArrival=true";
@@ -26,25 +30,39 @@ const FeaturedProducts = ({
     }
   };
 
-  const getFilteredData = () => {
-    let filteredProducts = [];
+  const filteredProducts = products
+    .sort(() => Math.random() - Math.random())
+    .slice(0, 4);
 
-    if (featuredType === "newarrival") {
-      filteredProducts = products.filter(
-        (product) => product.isNewArrival === true
-      );
-    } else if (featuredType === "sale") {
-      filteredProducts = products.filter(
-        (product) => product.discount && product.discount.value
-      );
-    }
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const defaultPath = "/api/products/filter?";
+        const fullpath = featuredType.includes("isNewArrival")
+          ? defaultPath + "isNewArrival=true"
+          : featuredType.includes("sale")
+          ? defaultPath + "sale=true"
+          : featuredType.includes("bestseller")
+          ? defaultPath + "isFeatured=true"
+          : "";
+        const res = await fetch(fullpath);
 
-    const limitedProducts = filteredProducts.slice(0, 8);
-    return limitedProducts;
-  };
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
 
-  const filteredProducts = getFilteredData();
+        const products = await res.json();
+        setProducts(products);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchProperties();
+  }, [featuredType]);
+  if (loading) return <Spinner loading={loading} />;
   return (
     <>
       <motion.section

@@ -1,18 +1,14 @@
 import FeaturedProducts from "./FeaturedProducts";
-import { fetchProducts } from "@/utils/request";
 
-const HomeFeaturedProducts = async () => {
-  const products = await fetchProducts();
-
+const HomeFeaturedProducts = () => {
   return (
     <>
       <FeaturedProducts
-        products={products}
         featuredTitle="ເຄື່ອງມາໃໝ່"
         featuredDesc="ຄົ້ນພົບການເພີ່ມໃຫມ່ຫຼ້າສຸດຂອງຄໍເລັກຊັນຂອງພວກເຮົາ, ສະເຫນີທາງເລືອກທີ່ສົດຊື່ນແລະທັນສະໄຫມສໍາລັບທ່ານ."
         showButton={false}
         isScrollX={false}
-        featuredType={"newarrival"}
+        featuredType={"isNewArrival"}
       />
       <FeaturedProducts
         products={[]}
@@ -22,8 +18,8 @@ const HomeFeaturedProducts = async () => {
         isScrollX={false}
         featuredType="bestseller"
       />
+
       <FeaturedProducts
-        products={products}
         featuredTitle="SALE"
         featuredDesc="ຫຼຸດກະນ່ຳ"
         showButton={false}

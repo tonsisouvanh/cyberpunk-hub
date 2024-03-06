@@ -4,9 +4,7 @@ export const POST = async (req) => {
   try {
     const { imageId } = await req.json();
 
-    const result = await deleteImage(imageId);
-    console.log("🚀 ~ POST ~ data:", result);
-
+    await deleteImage(imageId);
     return new Response("Delete image success", { status: 200 });
   } catch (error) {
     console.log(error);

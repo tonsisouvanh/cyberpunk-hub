@@ -9,7 +9,7 @@ const Topbar = () => {
         <div className="dropdown"></div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">
+        <a className="btn btn-ghost">
           <Logo />
         </a>
       </div>

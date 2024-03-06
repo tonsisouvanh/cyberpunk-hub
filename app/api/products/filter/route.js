@@ -1,5 +1,5 @@
 import connectDB from "@/config/database";
-import {Product} from "@/models/Product";
+import { Product } from "@/models/Product";
 
 // GET /api/products/filter?<field>=<value> (One field only)
 export const GET = async (req) => {
@@ -10,9 +10,9 @@ export const GET = async (req) => {
     const category = searchParams.get("category");
     const sale = searchParams.get("sale");
     const brand = searchParams.get("brand");
+    const isFeatured = searchParams.get("isFeatured");
     let query;
 
-    
     if (sale && Boolean(sale) === true) {
       query = {
         $or: [
@@ -26,6 +26,7 @@ export const GET = async (req) => {
           { categories: category },
           { isNewArrival: isNewArrival },
           { brand: brand },
+          { isFeatured: isFeatured },
         ],
       };
     }

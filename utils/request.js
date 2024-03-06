@@ -25,7 +25,6 @@ async function fetchProduct(id) {
     }
     const res = await fetch(`${apiDomain}/products/${id}`);
     if (!res.ok) {
-      console.log("🚀 ~ fetchProduct ~ `${apiDomain}/products/${id}`:", `${apiDomain}/products/${id}`)
       throw new Error("Fail to fetch data");
     }
     return res.json();

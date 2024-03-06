@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import PageHeader from "./PageHeader";
 import Select from "react-select";
 import InventoryInput from "./InventoryInput";
 import { toast } from "react-toastify";
@@ -157,8 +156,7 @@ const ProductEditForm = () => {
         });
 
         if (res.status === 200) {
-          const data = await res.json();
-          toast.success(data.message);
+          toast.success("Updated product");
           router.push("/manage-products");
         }
       } catch (error) {
@@ -184,9 +182,9 @@ const ProductEditForm = () => {
         <div className="flex items-center justify-center p-12">
           {/* Author: FormBold Team */}
           <div className="mx-auto w-full lg:max-w-4xl bg-transparent rounded-lg p-4d lg:p-20d">
-            <div className="m-w-full flex justify-center">
+            {/* <div className="m-w-full flex justify-center">
               <PageHeader headerText="Edit Product" />
-            </div>
+            </div> */}
             <form onSubmit={handleSubmit}>
               <div className="mb-5">
                 <label
@@ -445,7 +443,7 @@ const ProductEditForm = () => {
                       Loading
                     </>
                   ) : (
-                    "Edit Product"
+                    "Edit"
                   )}
                 </button>
               </div>
