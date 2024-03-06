@@ -11,7 +11,6 @@ const HomeFeaturedProducts = () => {
         featuredType={"isNewArrival"}
       />
       <FeaturedProducts
-        products={[]}
         featuredTitle="ເຄື່ອງຂາຍດີ"
         featuredDesc="ເຄື່ອງທີ່ລູກຄ້ານິຍົມ ແລະ ສົນໃຈ"
         showButton={false}

@@ -21,12 +21,13 @@ const FeaturedProducts = ({
   const [loading, setLoading] = useState(true);
 
   const getFeaturedType = () => {
-    if (featuredType === "newarrival") {
+    if (featuredType === "isNewArrival") {
       return "/products/filter-results?isNewArrival=true";
     } else if (featuredType === "sale") {
       return "/products/filter-results?sale=true";
-    } else {
-      return "";
+    } else if (featuredType === "bestseller") {
+      console.log("🚀 ~ getFeaturedType ~ featuredType:", featuredType);
+      return "/products/filter-results?isFeatured=true";
     }
   };
 

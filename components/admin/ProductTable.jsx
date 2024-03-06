@@ -1,7 +1,7 @@
 import { noimage } from "@/assets/images";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import { FaCheckCircle, FaPencilAlt, FaTrash } from "react-icons/fa";
 import ProductRating from "../Rating";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
@@ -39,8 +39,6 @@ const ProductTable = ({ products, setProducts }) => {
     }
   };
 
-
-
   if (deleteLoading) return <Spinner loading={deleteLoading} />;
   return (
     <div className="overflow-x-auto pb-8">
@@ -58,6 +56,9 @@ const ProductTable = ({ products, setProducts }) => {
             </th>
             <th className="px-6 py-5 text-left text-sm font-semibold text-black">
               In stock
+            </th>
+            <th className="px-6 py-5 text-left text-sm font-semibold text-black">
+              Featured
             </th>
             <th className="px-6 py-5 text-left text-sm font-semibold text-black">
               Rating
@@ -102,6 +103,11 @@ const ProductTable = ({ products, setProducts }) => {
                     {ele.size}: {ele.quantity}
                   </span>
                 ))}
+              </td>
+              <td className="px-6 py-3">
+                {product?.isFeatured ? (
+                  <FaCheckCircle className="text-success" />
+                ) : null}
               </td>
               <td className="px-6 py-3">
                 <ProductRating value={product?.ratings} />

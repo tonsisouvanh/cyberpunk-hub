@@ -11,14 +11,12 @@ export const GET = async (req) => {
     const sale = searchParams.get("sale");
     const brand = searchParams.get("brand");
     const isFeatured = searchParams.get("isFeatured");
+    console.log("🚀 ~ GET ~ isFeatured:", isFeatured)
     let query;
 
     if (sale && Boolean(sale) === true) {
       query = {
-        $or: [
-          { "discount.discountType": "percentage" },
-          { "discount.discountType": "fixed" },
-        ],
+        $or: [{ "discount.value": { $gt: 0 } }],
       };
     } else {
       query = {

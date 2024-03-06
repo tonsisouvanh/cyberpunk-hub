@@ -1,9 +1,9 @@
-import Image from "next/image";
 import React from "react";
 import Logo from "../Logo";
 
 const Topbar = () => {
   return (
+    // TODO: add logout
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown"></div>

@@ -149,7 +149,7 @@ const Navbar = () => {
                 </div>
                 <Link
                   href={`/cart/${1}`}
-                  className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
+                  className="relative hidden btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
                 >
                   <BiCartAlt className="text-neutral" size={30} />
 
@@ -285,7 +285,7 @@ const Navbar = () => {
             </div>
             <Link
               href={`/cart/${1}`}
-              className="relative btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
+              className="relative hidden btn-circle btn btn-ghost text-gray-700 hover:text-gray-600"
             >
               <BiCartAlt className="text-neutral" size={30} />
 
