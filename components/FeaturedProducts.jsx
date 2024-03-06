@@ -26,7 +26,6 @@ const FeaturedProducts = ({
     } else if (featuredType === "sale") {
       return "/products/filter-results?sale=true";
     } else if (featuredType === "bestseller") {
-      console.log("🚀 ~ getFeaturedType ~ featuredType:", featuredType);
       return "/products/filter-results?isFeatured=true";
     }
   };
@@ -38,14 +37,17 @@ const FeaturedProducts = ({
   useEffect(() => {
     const fetchProperties = async () => {
       try {
+        const lowercasedType = featuredType.toLowerCase();
         const defaultPath = "/api/products/filter?";
-        const fullpath = featuredType.includes("isNewArrival")
-          ? defaultPath + "isNewArrival=true"
-          : featuredType.includes("sale")
-          ? defaultPath + "sale=true"
-          : featuredType.includes("bestseller")
-          ? defaultPath + "isFeatured=true"
-          : "";
+        
+        const fullpath =
+          lowercasedType === "isnewarrival"
+            ? defaultPath + "isNewArrival=true"
+            : lowercasedType === "sale"
+            ? defaultPath + "sale=true"
+            : lowercasedType === "bestseller"
+            ? defaultPath + "isFeatured=true"
+            : "";
         const res = await fetch(fullpath);
 
         if (!res.ok) {
@@ -99,10 +101,9 @@ const FeaturedProducts = ({
                   <div className="absolute top-0 m-1 rounded-full bg-white"></div>
                   <div className="mt-4 flex items-start justify-between">
                     <div className="">
-                      <h3 className="text-xs font-semibold sm:text-sm md:text-base">
+                      <h3 className="text-xs font-semibold sm:text-sm md:text-base mb-2">
                         <Link
                           href={`/products/${product._id}`}
-                          title=""
                           className="cursor-pointer border-sky-950 hover:border-b-2"
                         >
                           {product.name}

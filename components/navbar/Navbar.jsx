@@ -20,10 +20,7 @@ import { noimage } from "@/assets/images";
 const menuItems = [
   { text: "ໜ້າຫຼັກ", toPath: "/" },
   { text: "ເຄື່ອງທັງໝົດ", toPath: "/products" },
-  // { id: 2, text: "Sale", toPath: "/products" },
-  // { id: 3, text: "ເຄື່ອງມາໃໝ່", toPath: "/all-products/arrival" },
   { text: "ກ່ຽວກັບພໍ່ຄ້າ", toPath: "/about" },
-  { text: "ຕິດຕໍ່", toPath: "/contact" },
 ];
 
 const Navbar = () => {

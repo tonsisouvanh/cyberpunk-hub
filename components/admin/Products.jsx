@@ -62,24 +62,20 @@ const Products = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setFilter("all")}
-            className={`btn btn-ghost ${
-              filter.includes("all") && "btn-active"
-            }`}
+            className={`btn btn-ghost ${filter === "all" && "btn-active"}`}
           >
             All
           </button>
           <button
             onClick={() => setFilter("sale")}
-            className={`btn btn-ghost ${
-              filter.includes("sale") && "btn-active"
-            }`}
+            className={`btn btn-ghost ${filter === "sale" && "btn-active"}`}
           >
             Sales
           </button>
           <button
             onClick={() => setFilter("isNewArrival")}
             className={`btn btn-ghost ${
-              filter.includes("isNewArrival") && "btn-active"
+              filter === "isnewarrival" && "btn-active"
             }`}
           >
             New Arrival

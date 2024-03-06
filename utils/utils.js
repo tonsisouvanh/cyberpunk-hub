@@ -13,9 +13,11 @@ export function formatPrice(price, decimalPlaces = 0) {
 }
 
 export const calculateDiscountedPrice = (originalPrice, discount) => {
+  console.log("🚀 ~ calculateDiscountedPrice ~ originalPrice:", originalPrice)
+  console.log("🚀 ~ calculateDiscountedPrice ~ discount:", discount)
   let discountAmount;
   if (discount) {
-    if (discount.type === "percentage") {
+    if (discount.discountType === "percentage") {
       discountAmount = (originalPrice * discount.value) / 100;
     } else discountAmount = discount.value;
     return originalPrice - discountAmount;

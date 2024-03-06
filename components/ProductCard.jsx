@@ -11,7 +11,11 @@ const ProductCard = ({ product }) => {
 
   return (
     <>
-      <ProductModal isOpen={openModal} setIsOpen={setOpenModal} product={product} />
+      <ProductModal
+        isOpen={openModal}
+        setIsOpen={setOpenModal}
+        product={product}
+      />
 
       <div className="relative hover:shadow-2xl transition duration-300 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
         <Link
@@ -26,21 +30,26 @@ const ProductCard = ({ product }) => {
             sizes="100vw"
             className="object-cover"
           />
-          {product?.discount.value > 0 ? (
-            <>
-              {product?.discount?.discountType === "percentage" ? (
-                <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                  {product?.discount?.value}% OFF
-                </span>
-              ) : (
-                <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                  ຫຼູດ {product?.discount?.value?.toLocaleString()}
-                </span>
-              )}
-            </>
-          ) : (
-            ""
-          )}
+          <div className="absolute top-0 left-0 space-x-2 m-2">
+            {product?.isNewArrival && (
+              <span className="badge badge-primary">New</span>
+            )}
+            {product?.discount.value > 0 ? (
+              <>
+                {product?.discount?.discountType === "percentage" ? (
+                  <span className="rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                    {product?.discount?.value}% OFF
+                  </span>
+                ) : (
+                  <span className="rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                    ຫຼູດ {product?.discount?.value?.toLocaleString()}
+                  </span>
+                )}
+              </>
+            ) : (
+              ""
+            )}
+          </div>
         </Link>
         <div className="mt-4 px-5 pb-5">
           <Link href={`/products/${product._id}`}>
@@ -51,14 +60,16 @@ const ProductCard = ({ product }) => {
           <div className="mt-2 mb-5 flex items-center justify-between">
             <p>
               <span className="text-2xl mr-2 font-bold text-slate-900">
-                {calculateDiscountedPrice(
-                  product?.price,
-                  product?.discount
-                ).toLocaleString()}
+                {product?.discount.value > 0
+                  ? calculateDiscountedPrice(
+                      product?.price,
+                      product?.discount
+                    ).toLocaleString()
+                  : product?.price?.toLocaleString()}
               </span>
               {product?.discount?.value > 0 ? (
                 <span className="text-sm text-slate-900 line-through">
-                  {product?.price.toLocaleString()}
+                  {product?.price?.toLocaleString()}
                 </span>
               ) : (
                 ""
@@ -66,7 +77,7 @@ const ProductCard = ({ product }) => {
             </p>
             <Rating value={product.ratings} />
           </div>
-          <div className=" space-y-2">
+          <div className="space-y-2">
             <div className="hidden items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +97,8 @@ const ProductCard = ({ product }) => {
             </div>
             <Link
               href={`/products/${product._id}`}
-              className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+              // className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+              className="btn btn-neutral btn-block bg-slate-900"
             >
               Detail
             </Link>

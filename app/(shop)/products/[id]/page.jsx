@@ -1,15 +1,15 @@
 "use client";
 import { noimage } from "@/assets/images";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductReview from "@/components/ProductReview";
 import Rating from "@/components/Rating";
 import Spinner from "@/components/Spinner";
+import GoBackButton from "@/components/buttons/GoBackButton";
 import { fetchProduct } from "@/utils/request";
 import { calculateDiscountedPrice } from "@/utils/utils";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaWhatsapp, FaWhatsappSquare } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
@@ -69,7 +69,9 @@ const ProductDetailPage = () => {
   return (
     <section className="py-12 sm:py-16">
       <div className="container mx-auto px-4">
-        <Breadcrumbs />
+        <div className="">
+          <GoBackButton style={"btn btn-neutral btn-outline"} />
+        </div>
         <div className="">
           <div className="p-6 lg:max-w-6xl max-w-2xl mx-auto">
             <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8">
@@ -131,7 +133,8 @@ const ProductDetailPage = () => {
                         onClick={() => setSelectedSize(item.size)}
                         type="button"
                         className={`w-12 h-12 border-2 ${
-                          selectedSize.includes(item.size) && "border-gray-800"
+                          selectedSize.toLowerCase() ===
+                            item.size.toLowerCase() && "border-gray-800"
                         } hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0`}
                       >
                         {item.size}
@@ -148,7 +151,7 @@ const ProductDetailPage = () => {
                   <button
                     type="button"
                     onClick={handleSendingWhatsApp}
-                    className="w-full justify-center flex items-center bg-[#128c7e] mt-4 px-4 py-3 bg- hover:bg-gray-900 text-white font-bold rounded"
+                    className="w-full justify-center flex items-center bg-[#128c7e] mt-4 px-4 py-3 bg- hover:bg-[#128c7e]/90 text-white font-bold rounded"
                   >
                     <FaWhatsapp size={25} className="mr-2" />
                     Whats App

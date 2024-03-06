@@ -7,8 +7,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
-  title: "PropertyPulse | Find the perfect Rental",
-  description: "Find your dream rental property",
+  title: "CyberpunkHub | Dicover Our Cyberpunk Fashion",
+  description: "Find your favorite Cyberpunk fashion",
 };
 const notoSansLao = Noto_Sans_Lao({
   subsets: ["lao"],
