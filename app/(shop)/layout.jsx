@@ -3,6 +3,8 @@ import AuthProvider from "@/components/AuthProvider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import { Noto_Sans_Lao } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "PropertyPulse | Find the perfect Rental",
@@ -23,7 +25,7 @@ const ShopLayout = ({ children }) => {
           <Navbar />
           <main>{children}</main>
           <Footer />
-          {/* <ToastContainer /> */}
+          <ToastContainer />
         </body>
       </html>
     </AuthProvider>

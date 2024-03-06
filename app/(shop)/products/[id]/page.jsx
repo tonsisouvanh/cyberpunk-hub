@@ -1,16 +1,24 @@
 "use client";
 import { noimage } from "@/assets/images";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ProductReview from "@/components/ProductReview";
+import Rating from "@/components/Rating";
 import Spinner from "@/components/Spinner";
 import { fetchProduct } from "@/utils/request";
+import { calculateDiscountedPrice } from "@/utils/utils";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaWhatsapp, FaWhatsappSquare } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentImage, setCurrentImage] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("");
+
   useEffect(() => {
     const fetchProductData = async () => {
       if (!id) return;
@@ -29,6 +37,32 @@ const ProductDetailPage = () => {
     }
   }, [id, product]);
 
+  const handleSendingWhatsApp = () => {
+    if (selectedSize && selectedSize !== "") {
+      const merchantPhoneNumber = process.env.NEXT_PUBLIC_WHATSAPP;
+      let whatsappMessage = `ສະບາຍດີຂໍຖາມຂໍ້ມູນສິນຄ້າ: \n\n`;
+      whatsappMessage += `link: ${process.env.NEXT_PUBLIC_DOMAIN}/${product._id}\n`;
+      whatsappMessage += `ຊື່: ${product.name}\n`;
+      whatsappMessage += `ຮູບພາບ: ${product.images[0]}\n`;
+      whatsappMessage += `ລາຄາ: ${
+        product.discount.value > 0
+          ? calculateDiscountedPrice(
+              product.price,
+              product.discount
+            ).toLocaleString()
+          : product.price.toLocaleString()
+      }\n`;
+      whatsappMessage += `Size: ${selectedSize}     ຈຳນວນ: ${1}\n`;
+      whatsappMessage += `\n\n\n`;
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      const whatsappLink = `https://wa.me/${merchantPhoneNumber}?text=${encodedMessage}`;
+      window.open(whatsappLink, "_blank");
+      return;
+    } else {
+      toast.warning("ເລຶອກ size");
+    }
+  };
+
   if (loading) {
     return <Spinner loading={loading} />;
   }
@@ -36,288 +70,100 @@ const ProductDetailPage = () => {
     <section className="py-12 sm:py-16">
       <div className="container mx-auto px-4">
         <Breadcrumbs />
-        <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
-          <div className="lg:col-span-3 lg:row-end-1">
-            <div className="lg:flex lg:items-start">
-              <div className="lg:order-2 lg:ml-5">
-                <div className="max-w-xl overflow-hidden rounded-lg">
-                  <Image
-                    className="h-full w-full max-w-full object-cover"
-                    src={
-                      product?.images?.length > 0 ? product?.images[0] : noimage
-                    }
-                    alt=""
-                    width={500}
-                    height={500}
-                    sizes="100vw"
-                  />
+        <div className="">
+          <div className="p-6 lg:max-w-6xl max-w-2xl mx-auto">
+            <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="w-full lg:sticky top-0 sm:flex gap-2">
+                <div className="sm:space-y-3 w-16 max-sm:flex max-sm:mb-4 max-sm:gap-4">
+                  {product?.images?.map((image, index) => (
+                    <Image
+                      key={index}
+                      src={image || noimage}
+                      alt=""
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-full cursor-pointer"
+                      onClick={() => setCurrentImage(image)}
+                    />
+                  ))}
                 </div>
+
+                <Image
+                  src={
+                    (!currentImage ? product?.images[0] : currentImage) ||
+                    noimage
+                  }
+                  alt=""
+                  width={500}
+                  height={0}
+                  sizes="100vw"
+                  className="w-4/5 rounded object-cover"
+                />
               </div>
-              <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
-                <div className="flex flex-row items-start lg:flex-col">
-                  {product &&
-                    product?.images?.length > 0 &&
-                    product?.images?.map((image, index) => (
+              <div>
+                <h2 className="text-2xl font-extrabold text-gray-800">
+                  {product?.name}
+                </h2>
+                <div className="flex flex-wrap gap-4 mt-4">
+                  <p className="text-gray-800 text-xl font-bold">
+                    {calculateDiscountedPrice(
+                      product.price,
+                      product.discount
+                    ).toLocaleString()}{" "}
+                    LAK
+                  </p>
+                  {product.discount && product.discount.value > 0 && (
+                    <p className="text-gray-400 text-xl">
+                      <strike>{product.price.toLocaleString()} LAK</strike>
+                    </p>
+                  )}
+                </div>
+                <div className="mt-4">
+                  <Rating value={product.ratings} iconStyle="text-xl" />
+                </div>
+                <div className="mt-8">
+                  <h3 className="text-lg font-bold text-gray-800">Sizes</h3>
+                  <div className="flex flex-wrap gap-4 mt-4">
+                    {product?.inventory?.map((item, index) => (
                       <button
                         key={index}
+                        onClick={() => setSelectedSize(item.size)}
                         type="button"
-                        className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
+                        className={`w-12 h-12 border-2 ${
+                          selectedSize.includes(item.size) && "border-gray-800"
+                        } hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0`}
                       >
-                        <Image
-                          className="h-full w-full object-cover"
-                          src={image}
-                          alt=""
-                          width={500}
-                          height={500}
-                          sizes="100vw"
-                        />
+                        {item.size}
                       </button>
                     ))}
+                  </div>
+                  <button
+                    disabled
+                    type="button"
+                    className="w-full mt-4 px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white font-bold rounded"
+                  >
+                    Add to cart
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSendingWhatsApp}
+                    className="w-full justify-center flex items-center bg-[#128c7e] mt-4 px-4 py-3 bg- hover:bg-gray-900 text-white font-bold rounded"
+                  >
+                    <FaWhatsapp size={25} className="mr-2" />
+                    Whats App
+                  </button>
                 </div>
+                <div className="mt-8">
+                  <h3 className="text-lg font-bold text-gray-800">
+                    About the item
+                  </h3>
+                  <ul className="space-y-3 list-disc mt-4 pl-4 text-sm text-gray-800">
+                    <li>{product?.description}</li>
+                  </ul>
+                </div>
+                <ProductReview />
               </div>
-            </div>
-          </div>
-          <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-            <h1 className="sm: text-2xl font-bold text-gray-900 sm:text-3xl">
-              {product.name}
-            </h1>
-            {/* Rating */}
-            <div className="mt-5 flex items-center">
-              <div className="flex items-center">
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  />
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  />
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  />
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  />
-                </svg>
-                <svg
-                  className="block h-4 w-4 align-middle text-yellow-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className=""
-                  />
-                </svg>
-              </div>
-              <p className="ml-2 text-sm font-medium text-gray-500">
-                1,209 Reviews
-              </p>
-            </div>
-            <h2 className="mt-8 text-base text-gray-900">Quantity:</h2>
-            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-              <label className="">
-                <input
-                  type="radio"
-                  name="type"
-                  // defaultValue="Powder"
-                  className="peer sr-only"
-                  defaultChecked=""
-                />
-                <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
-                  Powder
-                </p>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="type"
-                  // defaultValue="Whole Bean"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
-                  Whole Bean
-                </p>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="type"
-                  // defaultValue="Groud"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
-                  Groud
-                </p>
-              </label>
-            </div>
-            <h2 className="mt-8 text-base text-gray-900">Sizes:</h2>
-            <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-              <label className="">
-                <input
-                  type="radio"
-                  name="subscription"
-                  // defaultValue="4 Months"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
-                  4 Months
-                </p>
-                <span className="mt-1 block text-center text-xs">$80/mo</span>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="subscription"
-                  // defaultValue="8 Months"
-                  className="peer sr-only"
-                  defaultChecked=""
-                />
-                <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
-                  8 Months
-                </p>
-                <span className="mt-1 block text-center text-xs">$60/mo</span>
-              </label>
-              <label className="">
-                <input
-                  type="radio"
-                  name="subscription"
-                  // defaultValue="12 Months"
-                  className="peer sr-only"
-                />
-                <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
-                  12 Months
-                </p>
-                <span className="mt-1 block text-center text-xs">$40/mo</span>
-              </label>
-            </div>
-            <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
-              <div className="flex items-end">
-                <h1 className="text-3xl font-bold">
-                  {product.price?.toLocaleString()}
-                </h1>
-                <span className="text-base">
-                  {product.discount?.discountType
-                    ? product.discount?.value
-                    : "No discount"}
-                </span>
-              </div>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0 mr-3 h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
-                Add to cart
-              </button>
-            </div>
-            <ul className="mt-8 space-y-2">
-              <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                <svg
-                  className="mr-2 block h-5 w-5 align-middle text-gray-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    className=""
-                  />
-                </svg>
-                Free shipping worldwide
-              </li>
-              <li className="flex items-center text-left text-sm font-medium text-gray-600">
-                <svg
-                  className="mr-2 block h-5 w-5 align-middle text-gray-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                    className=""
-                  />
-                </svg>
-                Cancel Anytime
-              </li>
-            </ul>
-          </div>
-          <div className="lg:col-span-3">
-            <div className="border-b border-gray-300">
-              <nav className="flex gap-4">
-                <a
-                  href="#"
-                  title=""
-                  className="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"
-                >
-                  {" "}
-                  Description{" "}
-                </a>
-                <a
-                  href="#"
-                  title=""
-                  className="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600"
-                >
-                  Reviews
-                  <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">
-                    {" "}
-                    1,209{" "}
-                  </span>
-                </a>
-              </nav>
-            </div>
-            <div className="mt-8 flow-root sm:mt-12">
-              <p className="mt-4">{product.description}</p>
             </div>
           </div>
         </div>

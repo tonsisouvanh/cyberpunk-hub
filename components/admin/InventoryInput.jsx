@@ -5,7 +5,7 @@ import { FaTimes } from "react-icons/fa";
 const InventoryInput = ({ inventoryData, setInventoryData }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [selectedGender, setSelectedGender] = useState("male");
+  const [selectedGender, setSelectedGender] = useState("unisex");
   const handleAddInventory = () => {
     if (selectedSize === "") {
       return;
@@ -99,9 +99,9 @@ const InventoryInput = ({ inventoryData, setInventoryData }) => {
               <option value="" disabled>
                 Select Gender
               </option>
+              <option value="unisex">Unisex</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
-              <option value="unisex">Unisex</option>
             </select>
           </div>
         </div>

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { fetchProducts } from "@/utils/request";
 import Pagination from "./Pagination";
 import Spinner from "./Spinner";
 
