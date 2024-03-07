@@ -41,7 +41,7 @@ const ProductFilterResultsPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [isNewArrival, sale]);
+  }, [isNewArrival, sale,isFeatured]);
 
   if (loading === true) return <Spinner loading={loading} />;
   return (

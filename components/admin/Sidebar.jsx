@@ -9,7 +9,6 @@ import {
   FaGlobe,
   FaUser,
 } from "react-icons/fa";
-import Logo from "../Logo";
 import { cyberpunk, noimage } from "@/assets/images";
 import Image from "next/image";
 

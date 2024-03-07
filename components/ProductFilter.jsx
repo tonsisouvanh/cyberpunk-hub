@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductFilter = ({ filter, setFilter }) => {
   const sortingOptions = [
-    { value: "", label: "All" },
+    { value: "", label: "ທັງໝົດ" },
     { value: "bestseller", label: "ຂາຍດີ" },
     { value: "newArrivals", label: "ມາໃໝ່" },
     { value: "lowtohigh", label: "ລາຄາ: ຕ່ຳ - ສູງ" },

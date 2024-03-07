@@ -29,8 +29,6 @@ const Navbar = () => {
   const [providers, setProviders] = useState(null);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const setAuthProviders = async () => {
@@ -189,39 +187,6 @@ const Navbar = () => {
           <BurgerMenuIcon isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <ul className="text-1rem flex flex-col">
-          <li
-            onMouseLeave={() => setSubmenuOpen(false)}
-            className="flex flex-col items-center border-b-[1px] py-3 text-center transition"
-          >
-            <div className="group">
-              <div
-                className={`max-h-0 origin-top scale-y-0 transform overflow-hidden text-black opacity-0 transition-all duration-300 ${
-                  submenuOpen ? "max-h-full scale-y-100 opacity-100" : null
-                }`}
-              >
-                <div className="text-0.875rem flex flex-col gap-3">
-                  <Link
-                    className="mt-3 hover:opacity-70"
-                    onClick={handleNavbarClose}
-                    href="/products"
-                  >
-                    ເຄື່ອງທັງໝົດ
-                  </Link>
-                  {categories.map((item) => (
-                    <Link
-                      key={item.id}
-                      className="hover:opacity-70"
-                      onClick={handleNavbarClose}
-                      href={`/all-products/${item.name}`}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </li>
-
           {menuItems.map((item, index) => (
             <Link
               key={index}

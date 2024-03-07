@@ -8,7 +8,7 @@ const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
   };
 
   return (
-    <section className="container mx-auto flex justify-center items-center">
+    <section className="container font-arimo mx-auto flex justify-center items-center">
       <button
         className="btn btn-sm"
         disabled={page === 1}

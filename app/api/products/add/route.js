@@ -13,7 +13,7 @@ const opts = {
 };
 
 //GET api/products
-export const GET = async (req) => {
+export const GET = async () => {
   try {
     await connectDB();
 
@@ -29,7 +29,7 @@ export const GET = async (req) => {
 };
 
 // POST api/product
-export const POST = async (req, res) => {
+export const POST = async (req) => {
   try {
     await connectDB();
 

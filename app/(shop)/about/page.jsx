@@ -1,4 +1,5 @@
 import { noimage } from "@/assets/images";
+import SocialMedia from "@/components/SocialMedia";
 import Image from "next/image";
 import React from "react";
 
@@ -8,8 +9,8 @@ const AboutPage = () => {
       <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid items-center grid-cols-1 md:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-              Hey 👋 I am
+            <h2 className="text-3xl font-sans font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+              Hi 👋 I am
               <br className="block sm:hidden" /> Jimmy
             </h2>
             <p className="max-w-lg mt-3 text-xl leading-relaxed text-gray-300 md:mt-8">
@@ -23,37 +24,10 @@ const AboutPage = () => {
                 </span>
               </span>
               <br className="block sm:hidden" />{" "}
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="#"
-                  title=""
-                  className="transition-all duration-200 text-sky-500 hover:text-sky-600 hover:underline"
-                >
-                  Twitter
-                </a>
-                <a
-                  href="#"
-                  title=""
-                  className="transition-all duration-200 text-sky-500 hover:text-sky-600 hover:underline"
-                >
-                  Facebook
-                </a>
-                <a
-                  href="#"
-                  title=""
-                  className="transition-all duration-200 text-sky-500 hover:text-sky-600 hover:underline"
-                >
-                  Tiktok
-                </a>
-                <a
-                  href="#"
-                  title=""
-                  className="transition-all duration-200 text-sky-500 hover:text-sky-600 hover:underline"
-                >
-                  Instagram
-                </a>
-              </div>
             </p>
+            <div className="flex mt-4 flex-wrap gap-4">
+              <SocialMedia />
+            </div>
           </div>
           <div className="relative">
             <div className="h-screen py-6 sm:py-8 lg:py-12">

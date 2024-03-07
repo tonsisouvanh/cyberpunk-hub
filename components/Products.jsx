@@ -16,9 +16,6 @@ const Products = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        // const res = await fetch(
-        //   `/api/products?page=${page}&pageSize=${pageSize}`
-        // );
         const res = await fetch(
           `/api/products?page=${page}&pageSize=${pageSize}&filter=${filter}`
         );
@@ -38,7 +35,6 @@ const Products = () => {
 
     fetchProperties();
   }, [page, pageSize, filter]);
-  console.log("🚀 ~ Products ~ filter:", filter);
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };

@@ -4,7 +4,6 @@ import ProductSearchForm from "@/components/ProductSearchForm";
 import Spinner from "@/components/Spinner";
 import GoBackButton from "@/components/buttons/GoBackButton";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const ProductSearchResultsPage = () => {
