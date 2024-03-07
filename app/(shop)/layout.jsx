@@ -9,6 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 export const metadata = {
   title: "CyberpunkHub | Dicover Our Cyberpunk Fashion",
   description: "Find your favorite Cyberpunk fashion",
+  icons: {
+    icon: ["/favicon.ico?v=4"],
+    apple: ["/apple-touch-icon.png?v=4"],
+    shortcut: ["/apple-touch-icon.png"],
+  },
 };
 const notoSansLao = Noto_Sans_Lao({
   subsets: ["lao"],
