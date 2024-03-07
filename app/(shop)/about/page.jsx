@@ -82,10 +82,15 @@ const AboutPage = () => {
                     href="#"
                     className="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80"
                   >
-                    <img
-                      src="https://res.cloudinary.com/devton/image/upload/v1709717869/cyberpunkhub/428497745_953074769500702_8897610650958405301_n_yhlpg4.jpg"
-                      loading="lazy"
-                      alt="Photo by Martin Sanchez"
+                    <Image
+                      src={
+                        "https://res.cloudinary.com/devton/image/upload/v1709717869/cyberpunkhub/428497745_953074769500702_8897610650958405301_n_yhlpg4.jpg" ||
+                        noimage
+                      }
+                      alt=""
+                      width={0}
+                      height={0}
+                      sizes="100vw"
                       className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
@@ -99,10 +104,15 @@ const AboutPage = () => {
                     href="#"
                     className="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80"
                   >
-                    <img
-                      src="https://res.cloudinary.com/devton/image/upload/v1709717956/cyberpunkhub/361951285_1441417529966111_1512080184456771389_n_gp5vop.jpg"
-                      loading="lazy"
-                      alt="Photo by Lorenzo Herrera"
+                    <Image
+                      src={
+                        "https://res.cloudinary.com/devton/image/upload/v1709717956/cyberpunkhub/361951285_1441417529966111_1512080184456771389_n_gp5vop.jpg" ||
+                        noimage
+                      }
+                      alt=""
+                      width={0}
+                      height={0}
+                      sizes="100vw"
                       className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
