@@ -1,5 +1,6 @@
 "use client";
 import { noimage } from "@/assets/images";
+import Error from "@/components/Error";
 import ProductReview from "@/components/ProductReview";
 import Rating from "@/components/Rating";
 import Spinner from "@/components/Spinner";
@@ -63,6 +64,9 @@ const ProductDetailPage = () => {
   };
   if (loading) {
     return <Spinner loading={loading} />;
+  }
+  if (!product) {
+    return <Error />;
   }
   return (
     <section className="py-12 sm:py-16">

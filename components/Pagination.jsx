@@ -1,3 +1,4 @@
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
   const totalPages = Math.ceil(totalItems / pageSize);
 
@@ -14,7 +15,7 @@ const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
         disabled={page === 1}
         onClick={() => handlePageChange(page - 1)}
       >
-        &lt;
+        <RiArrowLeftSLine size={20} />
       </button>
       <span className="mx-2 text-neutral-500">
         Page {page} of {totalPages}
@@ -24,7 +25,7 @@ const Pagination = ({ page, pageSize, totalItems, onPageChange }) => {
         disabled={page === totalPages}
         onClick={() => handlePageChange(page + 1)}
       >
-        &gt;
+        <RiArrowRightSLine size={20} />
       </button>
     </section>
   );

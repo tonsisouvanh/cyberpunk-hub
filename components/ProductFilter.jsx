@@ -33,20 +33,6 @@ const ProductFilter = ({ filter, setFilter }) => {
             </select>
           </label>
         </div>
-        <div className="relative hidden inline-blockd text-left">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">Categories</span>
-            </div>
-            <select className="select select-sm lg:select-md">
-              <option>Star Wars</option>
-              <option>Harry Potter</option>
-              <option>Lord of the Rings</option>
-              <option>Planet of the Apes</option>
-              <option>Star Trek</option>
-            </select>
-          </label>
-        </div>
       </div>
     </div>
   );
