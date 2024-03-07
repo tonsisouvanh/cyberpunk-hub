@@ -154,7 +154,7 @@ export const PUT = async (req, { params }) => {
         status: 404,
       });
     }
-    return new Response(JSON.stringify({updatedProduct}, { status: 200 }));
+    return new Response(JSON.stringify({ updatedProduct }, { status: 200 }));
   } catch (error) {
     return new Response("Fail to add product", { status: 500 });
   }

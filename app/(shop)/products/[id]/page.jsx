@@ -36,7 +36,6 @@ const ProductDetailPage = () => {
       fetchProductData();
     }
   }, [id, product]);
-
   const handleSendingWhatsApp = () => {
     if (selectedSize && selectedSize !== "") {
       const merchantPhoneNumber = process.env.NEXT_PUBLIC_WHATSAPP;
@@ -62,7 +61,6 @@ const ProductDetailPage = () => {
       toast.warning("ເລຶອກ size");
     }
   };
-
   if (loading) {
     return <Spinner loading={loading} />;
   }
@@ -77,7 +75,7 @@ const ProductDetailPage = () => {
             <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="w-full lg:sticky top-0 sm:flex gap-2">
                 <div className="sm:space-y-3 w-16 max-sm:flex max-sm:mb-4 max-sm:gap-4">
-                  {product?.images?.map((image, index) => (
+                  {product.images.map((image, index) => (
                     <Image
                       key={index}
                       src={image || noimage}
@@ -93,7 +91,7 @@ const ProductDetailPage = () => {
 
                 <Image
                   src={
-                    (!currentImage ? product?.images[0] : currentImage) ||
+                    (!currentImage ? product.images[0] : currentImage) ||
                     noimage
                   }
                   alt=""
@@ -105,7 +103,7 @@ const ProductDetailPage = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-extrabold text-gray-800">
-                  {product?.name}
+                  {product.name}
                 </h2>
                 <div className="flex flex-wrap gap-4 mt-4">
                   <p className="text-gray-800 text-xl font-bold">
@@ -127,7 +125,7 @@ const ProductDetailPage = () => {
                 <div className="mt-8">
                   <h3 className="text-lg font-bold text-gray-800">Sizes</h3>
                   <div className="flex flex-wrap gap-4 mt-4">
-                    {product?.inventory?.map((item, index) => (
+                    {product.inventory.map((item, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedSize(item.size)}
@@ -162,7 +160,7 @@ const ProductDetailPage = () => {
                     About the item
                   </h3>
                   <ul className="space-y-3 list-disc mt-4 pl-4 text-sm text-gray-800">
-                    <li>{product?.description}</li>
+                    <li>{product.description}</li>
                   </ul>
                 </div>
                 <ProductReview />

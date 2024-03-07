@@ -29,7 +29,6 @@ export const GET = async (req) => {
         sort = { price: -1 };
       }
     }
-    console.log("🚀 ~ GET ~ sort:", sort);
     
     const total = await Product.countDocuments({});
     const products = await Product.find(query)
