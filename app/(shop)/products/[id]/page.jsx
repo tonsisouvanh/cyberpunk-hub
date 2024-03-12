@@ -26,6 +26,7 @@ const ProductDetailPage = () => {
       try {
         const product = await fetchProduct(id);
         setProduct(product);
+        setCurrentImage(product?.images[0]);
       } catch (error) {
         console.log("Error fetching product", error);
       } finally {
@@ -53,7 +54,7 @@ const ProductDetailPage = () => {
           : product.price.toLocaleString()
       }\n`;
       whatsappMessage += `Size: ${selectedSize}     ຈຳນວນ: ${1}\n`;
-      whatsappMessage += `\n\n\n`;
+      whatsappMessage += `\n`;
       const encodedMessage = encodeURIComponent(whatsappMessage);
       const whatsappLink = `https://wa.me/${merchantPhoneNumber}?text=${encodedMessage}`;
       window.open(whatsappLink, "_blank");
@@ -83,11 +84,13 @@ const ProductDetailPage = () => {
                     <Image
                       key={index}
                       src={image || noimage}
-                      alt=""
+                      alt={image}
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="w-full cursor-pointer"
+                      className={`w-full cursor-pointer ${
+                        image === currentImage && "border-4 border-sky-900"
+                      }`}
                       onClick={() => setCurrentImage(image)}
                     />
                   ))}
@@ -125,6 +128,22 @@ const ProductDetailPage = () => {
                 </div>
                 <div className="mt-4">
                   <Rating value={product.ratings} iconStyle="text-xl" />
+                </div>
+                <div className="mt-8">
+                  <div className="">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">
+                      Stock:
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {product.inventory.map((ele) => (
+                        <>
+                          <span className="badge text-lg px-2 py-3">
+                            {ele.size} : {ele.quantity}
+                          </span>
+                        </>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 <div className="mt-8">
                   <h3 className="text-lg font-bold text-gray-800">Sizes</h3>

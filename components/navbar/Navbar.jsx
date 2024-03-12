@@ -45,7 +45,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* TODO: navbar overflow */}
       {/* Desktop nav */}
       <nav className="bg-white sticky top-0 z-50">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
