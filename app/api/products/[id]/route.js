@@ -114,6 +114,7 @@ export const PUT = async (req, { params }) => {
       images,
       imageList,
       selectedDeleteImages,
+      link,
     } = requestBody;
     // Check if there are any images to delete
     if (selectedDeleteImages && selectedDeleteImages.length > 0) {
@@ -146,6 +147,7 @@ export const PUT = async (req, { params }) => {
       isFeatured,
       ratings: parseFloat(ratings),
       images: addedImages,
+      link,
     };
     // Update product in database
     const updatedProduct = await Product.findByIdAndUpdate(id, productData);

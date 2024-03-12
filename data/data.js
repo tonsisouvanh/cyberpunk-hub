@@ -21,7 +21,7 @@ export const menuItems = [
   { id: 4, text: "ກ່ຽວກັບພໍ່ຄ້າ", toPath: "/404" },
   { id: 5, text: "ຕິດຕໍ່", toPath: "/404" },
 ];
-
+//TODO: use category data from databse instead
 export const CategoriesOptions = [
   { value: "clothing", label: "Clothing" },
   { value: "shoes", label: "Shoes" },

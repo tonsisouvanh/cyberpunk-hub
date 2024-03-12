@@ -50,6 +50,7 @@ const Sidebar = () => {
             />
           </div>
           {/* Sidebar content here */}
+          {/* TODO: Add active style */}
           {sidebarMenuItems.map((item, index) => (
             <li key={index}>
               <Link href={item.route}>

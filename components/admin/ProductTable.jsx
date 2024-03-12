@@ -42,6 +42,7 @@ const ProductTable = ({ products, setProducts }) => {
   if (deleteLoading) return <Spinner loading={deleteLoading} />;
   return (
     <div className="overflow-x-auto pb-8">
+      {/* TODO: add new arrival column */}
       <table className="min-w-full bg-white font-[sans-serif]">
         <thead className="bg-gray-100 whitespace-nowrap">
           <tr>

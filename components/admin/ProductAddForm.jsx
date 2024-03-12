@@ -28,6 +28,7 @@ const initialProductState = {
       quantity: 0,
     },
   ],
+  link: "",
 };
 
 const ProductAddForm = () => {
@@ -83,6 +84,8 @@ const ProductAddForm = () => {
       const ratings = fields.ratings;
       const inventory = inventoryData;
       const images = imagesData;
+      const link = fields.link;
+      console.log("🚀 ~ addProduct ~ link:", link)
 
       try {
         const res = await fetch(`/api/products/add`, {
@@ -103,6 +106,7 @@ const ProductAddForm = () => {
             isFeatured,
             ratings,
             images,
+            link,
           }),
         });
 
@@ -167,6 +171,26 @@ const ProductAddForm = () => {
               {/* // --------- Image -------- */}
               <ProductImageUpload setImagesData={setImagesData} />
 
+              {/* Ref Link */}
+              <div className="mb-5">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Social link
+                </label>
+                <input
+                  type="text"
+                  name="link"
+                  id="link"
+                  placeholder="Paste link here (Tiktok, facebook, instagram)"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={fields.link}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+
               {/* // --------- price -------- */}
               <div className="-mx-3 flex flex-wrap">
                 <div className="w-full px-3 sm:w-1/2">
@@ -177,6 +201,7 @@ const ProductAddForm = () => {
                     >
                       Import Price
                     </label>
+                    {/* TODO: add auto input price react auto suggest */}
                     <input
                       type="number"
                       name="importPrice"

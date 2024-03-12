@@ -65,6 +65,7 @@ export const POST = async (req) => {
       isFeatured,
       ratings,
       images,
+      link,
     } = requestBody;
     // Upload image to cloundinary
     const imagesUrl = await uploadMultipleImages(images, opts);
@@ -84,6 +85,7 @@ export const POST = async (req) => {
       isFeatured,
       ratings: parseFloat(ratings),
       images: imagesUrl,
+      link,
     };
     const newProduct = new Product(productData);
     await newProduct.save();
@@ -95,7 +97,5 @@ export const POST = async (req) => {
     return new Response("Fail to add property", { status: 500 });
   }
 };
-
-
 
 // POST /products/delete

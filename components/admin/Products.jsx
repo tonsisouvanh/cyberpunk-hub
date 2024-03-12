@@ -75,7 +75,7 @@ const Products = () => {
           <button
             onClick={() => setFilter("isNewArrival")}
             className={`btn btn-ghost ${
-              filter === "isnewarrival" && "btn-active"
+              filter === "isNewArrival" && "btn-active"
             }`}
           >
             New Arrival

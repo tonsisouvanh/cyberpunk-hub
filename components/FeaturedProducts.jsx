@@ -11,6 +11,7 @@ import ProductRating from "./Rating";
 import Empty from "./Empty";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
+import { calculateDiscountedPrice } from "@/utils/utils";
 
 const FeaturedProducts = ({
   featuredTitle = "No title",
@@ -39,7 +40,7 @@ const FeaturedProducts = ({
       try {
         const lowercasedType = featuredType.toLowerCase();
         const defaultPath = "/api/products/filter?";
-        
+
         const fullpath =
           lowercasedType === "isnewarrival"
             ? defaultPath + "isNewArrival=true"
@@ -87,6 +88,7 @@ const FeaturedProducts = ({
           {filteredProducts && filteredProducts.length > 0 ? (
             <div className="mt-10 grid grid-cols-2 gap-6 lg:mt-16 lg:grid-cols-4 lg:gap-4">
               {filteredProducts.map((product, index) => (
+                // replace this with Link to click
                 <article key={index} className="relative">
                   <div className="aspect-square overflow-hidden">
                     <Image
@@ -114,10 +116,15 @@ const FeaturedProducts = ({
                     </div>
                     <div className="text-right">
                       <del className="mt-px text-xs font-semibold text-gray-600 sm:text-sm">
-                        {product.price.toLocaleString()}
+                        {product.discount.value > 0 && product.price}
                       </del>
                       <p className="text-xs font-normal sm:text-sm md:text-base">
-                        {product.price.toLocaleString()}
+                        {product.discount.value > 0
+                          ? calculateDiscountedPrice(
+                              product.price,
+                              product.discount
+                            ).toLocaleString()
+                          : product.price.toLocaleString()}
                       </p>
                     </div>
                   </div>

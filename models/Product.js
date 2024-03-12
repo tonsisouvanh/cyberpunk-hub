@@ -24,6 +24,7 @@ const ProductSchema = new Schema(
         gender: { type: String, default: "male" },
       },
     ],
+    link: { type: String },
   },
   {
     timestamps: true,

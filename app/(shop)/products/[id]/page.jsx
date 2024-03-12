@@ -10,7 +10,7 @@ import { calculateDiscountedPrice } from "@/utils/utils";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaSearch, FaVideo, FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
@@ -19,6 +19,7 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentImage, setCurrentImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [ImageModalViewOpen, setImageModalViewOpen] = useState(false);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -71,6 +72,26 @@ const ProductDetailPage = () => {
   }
   return (
     <section className="py-12 sm:py-16">
+      {ImageModalViewOpen && (
+        <dialog className="modal modal-open">
+          <div className="modal-box overflow-hidden p-0">
+            <button
+              onClick={() => setImageModalViewOpen(false)}
+              className="btn btn-sm btn-circle btn-neutral absolute right-2 top-2"
+            >
+              ✕
+            </button>
+            <Image
+              src={currentImage || noimage}
+              alt={product.name}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </dialog>
+      )}
       <div className="container mx-auto px-4">
         <div className="">
           <GoBackButton style={"btn btn-neutral btn-outline"} />
@@ -96,17 +117,26 @@ const ProductDetailPage = () => {
                   ))}
                 </div>
 
-                <Image
-                  src={
-                    (!currentImage ? product.images[0] : currentImage) ||
-                    noimage
-                  }
-                  alt=""
-                  width={500}
-                  height={0}
-                  sizes="100vw"
-                  className="w-4/5 rounded object-cover"
-                />
+                <div className="w-4/5 relative">
+                  <Image
+                    src={
+                      (!currentImage ? product.images[0] : currentImage) ||
+                      noimage
+                    }
+                    alt=""
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-full h-full rounded object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setImageModalViewOpen(true)}
+                    className="btn btn-primary btn-sm absolute top-2 right-2 btn-circle"
+                  >
+                    <FaSearch size={13} />
+                  </button>
+                </div>
               </div>
               <div>
                 <h2 className="text-2xl font-extrabold text-gray-800">
@@ -129,18 +159,28 @@ const ProductDetailPage = () => {
                 <div className="mt-4">
                   <Rating value={product.ratings} iconStyle="text-xl" />
                 </div>
+                {product.link && (
+                  <div className="flex items-center">
+                    <FaVideo size={15} />
+                    <a
+                      href={product.link}
+                      target="_blank"
+                      className="btn btn-link text-neutral"
+                    >
+                      Video review
+                    </a>
+                  </div>
+                )}
                 <div className="mt-8">
                   <div className="">
                     <h3 className="text-lg font-bold text-gray-800 mb-4">
                       Stock:
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      {product.inventory.map((ele) => (
-                        <>
-                          <span className="badge text-lg px-2 py-3">
-                            {ele.size} : {ele.quantity}
-                          </span>
-                        </>
+                      {product.inventory.map((ele, index) => (
+                        <span key={index} className="badge text-lg px-2 py-3">
+                          {ele.size} : {ele.quantity}
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -178,14 +218,16 @@ const ProductDetailPage = () => {
                     Whats App
                   </button>
                 </div>
-                <div className="mt-8">
-                  <h3 className="text-lg font-bold text-gray-800">
-                    About the item
-                  </h3>
-                  <ul className="space-y-3 list-disc mt-4 pl-4 text-sm text-gray-800">
-                    <li>{product.description}</li>
-                  </ul>
-                </div>
+                {product.description && (
+                  <div className="mt-8">
+                    <h3 className="text-lg font-bold text-gray-800">
+                      About the item
+                    </h3>
+                    <ul className="space-y-3 list-disc mt-4 pl-4 text-sm text-gray-800">
+                      <li>{product.description}</li>
+                    </ul>
+                  </div>
+                )}
                 <ProductReview />
               </div>
             </div>

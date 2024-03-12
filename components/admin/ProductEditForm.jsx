@@ -22,6 +22,7 @@ const initialProductState = {
   },
   categories: [],
   ratings: "",
+  link: "",
 };
 
 const ProductEditForm = () => {
@@ -81,6 +82,7 @@ const ProductEditForm = () => {
           categories: productData.categories,
           brand: productData.brand,
           ratings: productData.ratings,
+          link: productData.link,
         });
       } catch (error) {
         console.log(error);
@@ -131,6 +133,7 @@ const ProductEditForm = () => {
       const ratings = fields?.ratings;
       const inventory = inventoryData;
       const ImagesInput = imagesData;
+      const link = fields.link;
       try {
         const res = await fetch(`/api/products/${id}`, {
           method: "PUT",
@@ -152,6 +155,7 @@ const ProductEditForm = () => {
             images: ImagesInput,
             imageList,
             selectedDeleteImages,
+            link,
           }),
         });
 
@@ -329,6 +333,26 @@ const ProductEditForm = () => {
                       </div>
                     ))}
                 </div>
+              </div>
+
+              {/* Link */}
+              <div className="mb-5">
+                <label
+                  htmlFor="name"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Social link
+                </label>
+                <input
+                  type="text"
+                  name="link"
+                  id="link"
+                  placeholder="Paste link here (Tiktok, facebook, instagram)"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={fields.link}
+                  required
+                  onChange={handleChange}
+                />
               </div>
 
               {/* Categories */}
